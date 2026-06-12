@@ -30,7 +30,7 @@ body{font-family:'Inter',sans-serif;background:#FAFAF8;color:#1C1C1C;overflow-x:
 .doc-line:nth-child(3){width:50%;}
 .folder-label{font-size:11px;font-weight:700;letter-spacing:3px;color:#C9A84C;text-align:center;position:absolute;bottom:18px;left:0;right:0;text-transform:uppercase;}
 .intro-logo{width:160px;margin-bottom:0.75rem;opacity:0;animation:riseUp 0.8s 0.2s forwards;}
-.intro-sub{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#A0998A;opacity:0;animation:riseUp 0.8s 0.5s forwards;}
+.intro-sub{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#A0998A;opacity:0;animation:riseUp 0.8s 0.5s forwards;text-align:center;width:100%;padding:0 1.5rem;}
 .intro-cta{margin-top:2.5rem;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:riseUp 0.8s 0.9s forwards;}
 .intro-cta span{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;font-weight:500;}
 .click-pulse{width:48px;height:48px;border-radius:50%;border:1.5px solid #C9A84C;display:flex;align-items:center;justify-content:center;animation:pulseAnim 1.5s infinite;}
@@ -91,6 +91,10 @@ nav{position:fixed;top:0;left:0;right:0;height:68px;background:rgba(250,250,248,
 .service-icon{font-size:28px;color:#C9A84C;margin-bottom:1.25rem;}
 .service-name{font-weight:700;font-size:15px;margin-bottom:0.5rem;color:#1C1C1C;}
 .service-desc{font-size:13px;color:#8B8179;line-height:1.7;}
+.service-card--featured{background:linear-gradient(135deg,#1C1C1C,#2a2010);border-top:2px solid #C9A84C;}
+.service-card--featured .service-name{color:#C9A84C;}
+.service-card--featured .service-desc{color:#B0A898;}
+.service-card--featured .service-icon{color:#C9A84C;}
 
 /* PROCESS */
 .process-steps{display:grid;grid-template-columns:repeat(5,1fr);border:1.5px solid #E8E3DB;border-radius:12px;overflow:hidden;}
@@ -132,7 +136,7 @@ nav{position:fixed;top:0;left:0;right:0;height:68px;background:rgba(250,250,248,
 .contact-card:hover{border-color:#C9A84C;transform:translateY(-3px);}
 .contact-card i{font-size:26px;color:#C9A84C;margin-bottom:0.875rem;display:block;}
 .contact-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#A0998A;margin-bottom:5px;font-weight:600;}
-.contact-val{font-size:13px;color:#1C1C1C;font-weight:600;}
+.contact-val{font-size:13px;color:#1C1C1C;font-weight:600;word-break:break-word;}
 
 /* LICENSE BAR */
 .license-bar{background:#1C1C1C;padding:1rem 2.5rem;display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;}
@@ -162,8 +166,15 @@ footer{background:#FAFAF8;padding:2.5rem;display:flex;align-items:center;justify
 }
 @media(max-width:480px){
   .hero{padding:80px 1.5rem 4rem;}
-  .hero-title{font-size:52px;}
+  .hero-title{font-size:46px;letter-spacing:-1px;}
   .process-steps{grid-template-columns:1fr;}
+  .intro-sub{font-size:9px;letter-spacing:2px;padding:0 2rem;word-break:break-word;}
+  .intro-arch{width:180px;}
+  .intro-logo{width:140px;}
+  .trust-bar{padding:1rem;gap:1rem;}
+  .trust-item{font-size:10px;letter-spacing:1px;}
+  .contact-grid{grid-template-columns:1fr 1fr;}
+  .hero-stats{gap:1.5rem;}
 }
 
 /* ── INTRO PAGE ── */
@@ -451,6 +462,10 @@ nav{position:fixed;top:0;left:0;right:0;height:68px;background:rgba(250,250,248,
 .service-icon{font-size:28px;color:#C9A84C;margin-bottom:1.25rem;}
 .service-name{font-weight:700;font-size:15px;margin-bottom:0.5rem;color:#1C1C1C;}
 .service-desc{font-size:13px;color:#8B8179;line-height:1.7;}
+.service-card--featured{background:linear-gradient(135deg,#1C1C1C,#2a2010);border-top:2px solid #C9A84C;}
+.service-card--featured .service-name{color:#C9A84C;}
+.service-card--featured .service-desc{color:#B0A898;}
+.service-card--featured .service-icon{color:#C9A84C;}
 
 /* PROCESS */
 .process-steps{display:grid;grid-template-columns:repeat(5,1fr);border:1.5px solid #E8E3DB;border-radius:12px;overflow:hidden;}
@@ -492,7 +507,7 @@ nav{position:fixed;top:0;left:0;right:0;height:68px;background:rgba(250,250,248,
 .contact-card:hover{border-color:#C9A84C;transform:translateY(-3px);}
 .contact-card i{font-size:26px;color:#C9A84C;margin-bottom:0.875rem;display:block;}
 .contact-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#A0998A;margin-bottom:5px;font-weight:600;}
-.contact-val{font-size:13px;color:#1C1C1C;font-weight:600;}
+.contact-val{font-size:13px;color:#1C1C1C;font-weight:600;word-break:break-word;}
 
 /* LICENSE BAR */
 .license-bar{background:#1C1C1C;padding:1rem 2.5rem;display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;}
@@ -520,8 +535,15 @@ footer{background:#FAFAF8;padding:2.5rem;display:flex;align-items:center;justify
 }
 @media(max-width:480px){
   .hero{padding:80px 1.5rem 4rem;}
-  .hero-title{font-size:52px;}
+  .hero-title{font-size:46px;letter-spacing:-1px;}
   .process-steps{grid-template-columns:1fr;}
+  .intro-sub{font-size:9px;letter-spacing:2px;padding:0 2rem;word-break:break-word;}
+  .intro-arch{width:180px;}
+  .intro-logo{width:140px;}
+  .trust-bar{padding:1rem;gap:1rem;}
+  .trust-item{font-size:10px;letter-spacing:1px;}
+  .contact-grid{grid-template-columns:1fr 1fr;}
+  .hero-stats{gap:1.5rem;}
 }
 
 </style>
@@ -1049,11 +1071,17 @@ footer{background:#FAFAF8;padding:2.5rem;display:flex;align-items:center;justify
     </div>
     <div class="services-grid reveal">
       <div class="service-card"><div class="service-icon"><i class="ti ti-building"></i></div><div class="service-name">New Construction</div><div class="service-desc">Ground-up residential and commercial builds, custom homes, ADUs, and mixed-use developments.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-tools"></i></div><div class="service-name">Remodeling</div><div class="service-desc">Full-home, kitchen, and bath remodels. Permits handled. Delivered on schedule.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-backhoe"></i></div><div class="service-name">Demolition</div><div class="service-desc">Selective and full demolition for residential and commercial sites across California.</div></div>
+      <div class="service-card"><div class="service-icon"><i class="ti ti-tools"></i></div><div class="service-name">Remodeling &amp; Renovation</div><div class="service-desc">Full-home, kitchen, and bath remodels. Permits handled. Delivered on schedule and on budget.</div></div>
+      <div class="service-card"><div class="service-icon"><i class="ti ti-backhoe"></i></div><div class="service-name">Demolition</div><div class="service-desc">Selective and full demolition for residential and commercial sites. Safe, permitted, and clean.</div></div>
       <div class="service-card"><div class="service-icon"><i class="ti ti-home-plus"></i></div><div class="service-name">ADU &amp; Additions</div><div class="service-desc">Accessory dwelling units, garage conversions, and room additions that maximize property value.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-building-skyscraper"></i></div><div class="service-name">Commercial Build-Out</div><div class="service-desc">Retail, office, and restaurant tenant improvements. Code compliant, on budget.</div></div>
-      <div class="service-card" style="border-color:#C9A84C44;background:linear-gradient(135deg,#1C1C1C 0%,#2a2010 100%);color:#FAFAF8;"><div class="service-icon" style="color:#C9A84C;font-size:2rem;"><i class="ti ti-map-2"></i></div><div class="service-name" style="color:#C9A84C;">Land Development</div><div class="service-desc" style="color:#B0A898;">We partner with investors to acquire raw, infill, and entitled land across California — then design, permit, build, and sell. Full-cycle execution: site selection, feasibility, entitlement, construction, and disposition. Whether you bring the land or the capital, we bring the license and the team.</div></div>
+      <div class="service-card"><div class="service-icon"><i class="ti ti-building-skyscraper"></i></div><div class="service-name">Commercial Build-Out</div><div class="service-desc">Retail, office, and restaurant tenant improvements. Code compliant, delivered on budget.</div></div>
+      <div class="service-card"><div class="service-icon"><i class="ti ti-droplet"></i></div><div class="service-name">Concrete &amp; Masonry</div><div class="service-desc">Foundations, slabs, driveways, retaining walls, stamped concrete, and block work done right.</div></div>
+      <div class="service-card"><div class="service-icon"><i class="ti ti-wind"></i></div><div class="service-name">HVAC</div><div class="service-desc">Full HVAC installation, replacement, and upgrades for residential and commercial properties.</div></div>
+      <div class="service-card"><div class="service-icon"><i class="ti ti-plug"></i></div><div class="service-name">Electrical</div><div class="service-desc">Panel upgrades, rewiring, EV charger installation, and full electrical for new builds and remodels.</div></div>
+      <div class="service-card"><div class="service-icon"><i class="ti ti-droplets"></i></div><div class="service-name">Plumbing</div><div class="service-desc">Rough-in, re-pipe, water heaters, fixture installs, and full plumbing for new construction.</div></div>
+      <div class="service-card"><div class="service-icon"><i class="ti ti-solar-panel"></i></div><div class="service-name">Solar &amp; Energy</div><div class="service-desc">Solar panel installation, battery storage, and energy-efficient upgrades for homes and businesses.</div></div>
+      <div class="service-card"><div class="service-icon"><i class="ti ti-fence"></i></div><div class="service-name">Hardscape &amp; Grading</div><div class="service-desc">Site grading, drainage, patios, walkways, fencing, and outdoor living spaces.</div></div>
+      <div class="service-card service-card--featured"><div class="service-icon"><i class="ti ti-map-2"></i></div><div class="service-name">Land Development</div><div class="service-desc">Partnering with investors to acquire raw and entitled land across California. We underwrite, entitle, build, and sell — full-cycle from acquisition to exit.</div></div>
     </div>
   </section>
 
@@ -1105,7 +1133,7 @@ footer{background:#FAFAF8;padding:2.5rem;display:flex;align-items:center;justify
         <div class="form-field"><label>Phone</label><input id="qPhone" type="tel" placeholder="(323) 000-0000"></div>
         <div class="form-field"><label>Email</label><input id="qEmail" type="email" placeholder="john@email.com"></div>
         <div class="form-field"><label>Project Type</label>
-          <select id="qProjectType"><option value="">Select a service...</option><option>New Construction</option><option>Remodeling</option><option>Demolition</option><option>ADU / Addition</option><option>Commercial Build-Out</option><option>Land Development</option></select>
+          <select id="qProjectType"><option value="">Select a service...</option><option>New Construction</option><option>Remodeling / Renovation</option><option>Demolition</option><option>ADU / Addition</option><option>Commercial Build-Out</option><option>Concrete &amp; Masonry</option><option>HVAC</option><option>Electrical</option><option>Plumbing</option><option>Solar &amp; Energy</option><option>Hardscape &amp; Grading</option><option>Land Development</option><option>Other</option></select>
         </div>
         <div class="form-field"><label>Location</label><input id="qLocation" type="text" placeholder="City, CA"></div>
         <div class="form-field form-full"><label>Project Details</label><textarea id="qDetails" rows="4" placeholder="Tell us about your project &#8212; scope, timeline, budget range..."></textarea></div>
@@ -1130,9 +1158,8 @@ footer{background:#FAFAF8;padding:2.5rem;display:flex;align-items:center;justify
 
   <div class="license-bar">
     <span class="gold-text">CSLB License #1156432</span><span class="sep">|</span>
-    <span>B &#8212; General Building</span><span class="sep">|</span>
-    <span>Bonded &middot; $25,000</span><span class="sep">|</span>
-    <span>Active thru 06/2028</span>
+    <span>B &#8212; General Building Contractor</span><span class="sep">|</span>
+    <span>Licensed &middot; Serving California</span>
   </div>
 
   <footer>
