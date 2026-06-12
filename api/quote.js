@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
   try {
     await resend.emails.send({
-      from: 'Galore Projects <noreply@galoreprojects.com>',
+      from: 'Galore Projects <onboarding@resend.dev>',
       to: 'info@galoreprojects.com',
       replyTo: email,
       subject: `New Quote Request — ${projectType} — ${location || 'Location not specified'}`,
