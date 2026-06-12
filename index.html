@@ -511,18 +511,25 @@ body.on-intro #custom-cursor { display: block; }
       <div class="section-sub">Tell us about your project and we&#8217;ll get back within 24 hours.</div>
     </div>
     <div class="quote-wrap reveal">
+      <div id="quoteSuccess" style="display:none;text-align:center;padding:3rem 2rem;background:#F5F2EE;border-radius:8px;border:1px solid #C9A84C44;">
+        <div style="font-size:2.5rem;margin-bottom:1rem;">&#10003;</div>
+        <div style="font-size:18px;font-weight:700;color:#1C1C1C;margin-bottom:0.5rem;">Request Received!</div>
+        <div style="color:#6B6560;font-size:14px;line-height:1.7;">We&#8217;ll review your project details and get back to you within 24 hours.<br>Check your inbox for a confirmation.</div>
+      </div>
+      <div id="quoteForm">
       <div class="form-grid">
-        <div class="form-field"><label>First Name</label><input type="text" placeholder="John"></div>
-        <div class="form-field"><label>Last Name</label><input type="text" placeholder="Smith"></div>
-        <div class="form-field"><label>Phone</label><input type="tel" placeholder="(323) 000-0000"></div>
-        <div class="form-field"><label>Email</label><input type="email" placeholder="john@email.com"></div>
+        <div class="form-field"><label>First Name</label><input id="qFirstName" type="text" placeholder="John"></div>
+        <div class="form-field"><label>Last Name</label><input id="qLastName" type="text" placeholder="Smith"></div>
+        <div class="form-field"><label>Phone</label><input id="qPhone" type="tel" placeholder="(323) 000-0000"></div>
+        <div class="form-field"><label>Email</label><input id="qEmail" type="email" placeholder="john@email.com"></div>
         <div class="form-field"><label>Project Type</label>
-          <select><option value="">Select a service...</option><option>New Construction</option><option>Remodeling</option><option>Demolition</option><option>ADU / Addition</option><option>Commercial Build-Out</option><option>Land Development</option></select>
+          <select id="qProjectType"><option value="">Select a service...</option><option>New Construction</option><option>Remodeling</option><option>Demolition</option><option>ADU / Addition</option><option>Commercial Build-Out</option><option>Land Development</option></select>
         </div>
-        <div class="form-field"><label>Location</label><input type="text" placeholder="City, CA"></div>
-        <div class="form-field form-full"><label>Project Details</label><textarea rows="4" placeholder="Tell us about your project &#8212; scope, timeline, budget range..."></textarea></div>
+        <div class="form-field"><label>Location</label><input id="qLocation" type="text" placeholder="City, CA"></div>
+        <div class="form-field form-full"><label>Project Details</label><textarea id="qDetails" rows="4" placeholder="Tell us about your project &#8212; scope, timeline, budget range..."></textarea></div>
       </div>
       <button class="form-submit" id="submitBtn">Submit Quote Request &#8594;</button>
+      </div>
     </div>
   </section>
 
@@ -610,11 +617,44 @@ document.querySelectorAll('.reveal').forEach(el => {
   }, { threshold: 0.1 }).observe(el);
 });
 
-document.getElementById('submitBtn').addEventListener('click', function() {
-  this.textContent = '✓ Sent! We’ll reach out within 24hrs';
-  this.style.background = '#C9A84C';
-  this.style.color = '#1C1C1C';
-  this.disabled = true;
+document.getElementById(‘submitBtn’).addEventListener(‘click’, async function() {
+  const btn = this;
+  const firstName  = document.getElementById(‘qFirstName’).value.trim();
+  const lastName   = document.getElementById(‘qLastName’).value.trim();
+  const phone      = document.getElementById(‘qPhone’).value.trim();
+  const email      = document.getElementById(‘qEmail’).value.trim();
+  const projectType= document.getElementById(‘qProjectType’).value;
+  const location   = document.getElementById(‘qLocation’).value.trim();
+  const details    = document.getElementById(‘qDetails’).value.trim();
+
+  if (!firstName || !email || !projectType) {
+    alert(‘Please fill in First Name, Email, and Project Type.’);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = ‘Sending…’;
+
+  try {
+    const res = await fetch(‘/api/quote’, {
+      method: ‘POST’,
+      headers: { ‘Content-Type’: ‘application/json’ },
+      body: JSON.stringify({ firstName, lastName, phone, email, projectType, location, details })
+    });
+
+    if (res.ok) {
+      document.getElementById(‘quoteForm’).style.display = ‘none’;
+      document.getElementById(‘quoteSuccess’).style.display = ‘block’;
+    } else {
+      btn.disabled = false;
+      btn.textContent = ‘Submit Quote Request →’;
+      alert(‘Something went wrong. Please try again or email us directly at info@galoreprojects.com’);
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = ‘Submit Quote Request →’;
+    alert(‘Network error. Please try again or email us at info@galoreprojects.com’);
+  }
 });
 </script>
 </body>
