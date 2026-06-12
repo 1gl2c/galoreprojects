@@ -169,7 +169,7 @@ footer{background:#FAFAF8;padding:2.5rem;display:flex;align-items:center;justify
 /* BLUEPRINT GRID BACKGROUND */
 #intro {
   background: #0a0f1a !important;
-  cursor: none !important;
+  cursor: pointer;
 }
 .blueprint-grid {
   position: absolute;
@@ -215,7 +215,7 @@ footer{background:#FAFAF8;padding:2.5rem;display:flex;align-items:center;justify
   transition: transform 0.05s;
   display: none;
 }
-body.on-intro #custom-cursor { display: block; }
+/* custom cursor disabled — caused cursor to vanish for users */
 
 /* 3D CONSTRUCTION SCENE */
 .construction-scene {
@@ -566,20 +566,7 @@ body.on-intro #custom-cursor { display: block; }
 const intro = document.getElementById('intro');
 const site = document.getElementById('site');
 
-// ── Custom gold pickaxe cursor ──
-const cursor = document.getElementById('custom-cursor');
-let lastX = 0, lastY = 0, angle = 0;
-document.addEventListener('mousemove', e => {
-  const dx = e.clientX - lastX, dy = e.clientY - lastY;
-  if (Math.abs(dx) + Math.abs(dy) > 2) {
-    angle = (angle + 8) % 30 - 15;
-    cursor.style.transform = `translate(-50%,-50%) rotate(${angle}deg)`;
-  }
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-  lastX = e.clientX; lastY = e.clientY;
-});
-document.body.classList.add('on-intro');
+// custom cursor removed — was hiding users' mouse
 
 // ── Shatter particles ──
 function spawnShards(cx, cy) {
@@ -604,7 +591,7 @@ intro.addEventListener('click', e => {
   const rect = document.getElementById('constructionScene').getBoundingClientRect();
   spawnShards(rect.left + rect.width/2, rect.top + rect.height/2);
   intro.classList.add('exploding');
-  document.body.classList.remove('on-intro');
+
   setTimeout(() => {
     site.classList.add('visible');
     setTimeout(() => { intro.style.display = 'none'; }, 200);
