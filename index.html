@@ -146,8 +146,8 @@ footer{background:#FAFAF8;padding:2.5rem;display:flex;align-items:center;justify
 .footer-info{font-size:11px;color:#A0998A;line-height:1.9;text-align:right;}
 
 /* REVEAL */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s,transform 0.65s;}
-.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal{opacity:1;transform:translateY(0);}
+
 
 /* MOBILE */
 @media(max-width:768px){
@@ -1153,22 +1153,12 @@ function enterSite() {
   intro._entered = true;
   intro.style.display = 'none';
   site.classList.remove('hidden');
-  // Re-trigger reveal animations now that site is visible
-  setTimeout(() => {
-    document.querySelectorAll('.reveal').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight) el.classList.add('visible');
-    });
-  }, 50);
+
 }
 intro.addEventListener('click', enterSite);
 intro.addEventListener('touchend', function(e){ e.preventDefault(); enterSite(); }, {passive:false});
 
-document.querySelectorAll('.reveal').forEach(el => {
-  new IntersectionObserver(([e]) => {
-    if (e.isIntersecting) el.classList.add('visible');
-  }, { threshold: 0.1 }).observe(el);
-});
+
 
 document.getElementById(‘submitBtn’).addEventListener(‘click’, async function() {
   const btn = this;
