@@ -1241,234 +1241,361 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- ═══════════════════════════════════════════════════
-     MACHINE ROOM — hidden page, accessible via /#machine
-     ═══════════════════════════════════════════════════ -->
-<div id="machine-room" style="display:none;position:fixed;inset:0;z-index:9999;background:#080808;overflow:hidden;font-family:'Inter',sans-serif;">
 
-  <!-- Blueprint grid -->
-  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;"></div>
 
-  <!-- Scanline -->
-  <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:2;"></div>
+<!-- MACHINE ROOM — access via /#machine -->
+<div id="machine-room" style="display:none;position:fixed;inset:0;z-index:9999;overflow:hidden;background:#060608;">
 
   <!-- Corner brackets -->
-  <div style="position:absolute;top:20px;left:20px;width:40px;height:40px;border-top:2px solid #C9A84C;border-left:2px solid #C9A84C;"></div>
-  <div style="position:absolute;top:20px;right:20px;width:40px;height:40px;border-top:2px solid #C9A84C;border-right:2px solid #C9A84C;"></div>
-  <div style="position:absolute;bottom:20px;left:20px;width:40px;height:40px;border-bottom:2px solid #C9A84C;border-left:2px solid #C9A84C;"></div>
-  <div style="position:absolute;bottom:20px;right:20px;width:40px;height:40px;border-bottom:2px solid #C9A84C;border-right:2px solid #C9A84C;"></div>
+  <div style="position:absolute;top:20px;left:20px;width:36px;height:36px;border-top:1.5px solid #C9A84C;border-left:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
+  <div style="position:absolute;top:20px;right:20px;width:36px;height:36px;border-top:1.5px solid #C9A84C;border-right:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
+  <div style="position:absolute;bottom:20px;left:20px;width:36px;height:36px;border-bottom:1.5px solid #C9A84C;border-left:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
+  <div style="position:absolute;bottom:20px;right:20px;width:36px;height:36px;border-bottom:1.5px solid #C9A84C;border-right:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
 
-  <!-- Close button -->
-  <button onclick="document.getElementById('machine-room').style.display='none';history.replaceState(null,'',window.location.pathname);" style="position:absolute;top:28px;right:70px;background:none;border:1px solid rgba(201,168,76,0.4);color:#C9A84C;font-size:11px;letter-spacing:2px;padding:6px 14px;cursor:pointer;z-index:10;font-family:inherit;">✕ CLOSE</button>
-
-  <!-- Label top-left -->
-  <div style="position:absolute;top:30px;left:70px;font-size:10px;letter-spacing:3px;color:rgba(201,168,76,0.6);text-transform:uppercase;z-index:10;">Galore Projects · Machine Room</div>
-
-  <!-- CRANE SVG — mouse-parallax layers -->
-  <div id="crane-scene" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-
-    <!-- Layer 0: ground glow (slow) -->
-    <div id="ml0" style="position:absolute;bottom:15%;left:50%;transform:translateX(-50%);width:500px;height:80px;background:radial-gradient(ellipse,rgba(201,168,76,0.15) 0%,transparent 70%);filter:blur(20px);border-radius:50%;"></div>
-
-    <!-- Layer 1: background dust (very slow) -->
-    <svg id="ml1" viewBox="0 0 900 600" style="position:absolute;width:min(95vw,900px);height:auto;opacity:0.15;" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="120" cy="480" r="3" fill="#C9A84C"/><circle cx="780" cy="420" r="2" fill="#C9A84C"/>
-      <circle cx="50" cy="300" r="1.5" fill="#C9A84C"/><circle cx="850" cy="200" r="2.5" fill="#C9A84C"/>
-      <circle cx="440" cy="560" r="2" fill="#C9A84C"/><circle cx="660" cy="540" r="1.5" fill="#C9A84C"/>
-      <line x1="0" y1="500" x2="900" y2="500" stroke="#C9A84C" stroke-width="0.5" stroke-dasharray="4 8"/>
-    </svg>
-
-    <!-- Layer 2: crane body (medium parallax) -->
-    <svg id="ml2" viewBox="0 0 900 680" style="position:absolute;width:min(95vw,900px);height:auto;" xmlns="http://www.w3.org/2000/svg">
-      <!-- Ground/base platform -->
-      <rect x="300" y="580" width="300" height="18" rx="3" fill="#1A1A1A" stroke="#C9A84C" stroke-width="1"/>
-      <rect x="260" y="594" width="380" height="10" rx="2" fill="#111" stroke="#C9A84C" stroke-width="0.8"/>
-      <!-- Tracks -->
-      <rect x="255" y="600" width="390" height="16" rx="4" fill="#151515" stroke="#333" stroke-width="1"/>
-      <circle cx="290" cy="608" r="8" fill="#222" stroke="#C9A84C" stroke-width="1"/><circle cx="290" cy="608" r="3" fill="#C9A84C"/>
-      <circle cx="340" cy="608" r="8" fill="#222" stroke="#C9A84C" stroke-width="1"/><circle cx="340" cy="608" r="3" fill="#C9A84C"/>
-      <circle cx="390" cy="608" r="8" fill="#222" stroke="#C9A84C" stroke-width="1"/><circle cx="390" cy="608" r="3" fill="#C9A84C"/>
-      <circle cx="510" cy="608" r="8" fill="#222" stroke="#C9A84C" stroke-width="1"/><circle cx="510" cy="608" r="3" fill="#C9A84C"/>
-      <circle cx="560" cy="608" r="8" fill="#222" stroke="#C9A84C" stroke-width="1"/><circle cx="560" cy="608" r="3" fill="#C9A84C"/>
-      <circle cx="610" cy="608" r="8" fill="#222" stroke="#C9A84C" stroke-width="1"/><circle cx="610" cy="608" r="3" fill="#C9A84C"/>
-      <!-- Cab -->
-      <rect x="340" y="520" width="130" height="62" rx="4" fill="#141414" stroke="#C9A84C" stroke-width="1.2"/>
-      <rect x="354" y="530" width="42" height="30" rx="2" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.4)" stroke-width="0.8"/>
-      <rect x="404" y="530" width="42" height="30" rx="2" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.4)" stroke-width="0.8"/>
-      <!-- Boom base -->
-      <rect x="390" y="490" width="30" height="90" rx="3" fill="#1A1A1A" stroke="#C9A84C" stroke-width="1"/>
-      <!-- Cross hatching on boom base -->
-      <line x1="390" y1="510" x2="420" y2="530" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
-      <line x1="420" y1="510" x2="390" y2="530" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
-      <line x1="390" y1="540" x2="420" y2="560" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
-      <line x1="420" y1="540" x2="390" y2="560" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
-      <!-- Specs overlay -->
-      <text x="80" y="360" font-family="monospace" font-size="9" fill="rgba(201,168,76,0.5)" letter-spacing="1">TECHNICAL SPECS</text>
-      <line x1="80" y1="365" x2="250" y2="365" stroke="rgba(201,168,76,0.3)" stroke-width="0.8"/>
-      <text x="80" y="384" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.4)">Boom Reach</text>
-      <text x="180" y="384" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.7)">62 ft</text>
-      <text x="80" y="400" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.4)">Lift Capacity</text>
-      <text x="180" y="400" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.7)">40 Tons</text>
-      <text x="80" y="416" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.4)">Status</text>
-      <text x="180" y="416" font-family="monospace" font-size="8" fill="#C9A84C">OPERATIONAL</text>
-      <text x="80" y="432" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.4)">License</text>
-      <text x="180" y="432" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.7)">CSLB #1156432</text>
-      <!-- Version tags bottom right -->
-      <rect x="640" y="580" width="60" height="18" rx="9" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
-      <text x="670" y="592" font-family="monospace" font-size="8" fill="#C9A84C" text-anchor="middle">GP · v1</text>
-      <rect x="710" y="580" width="80" height="18" rx="9" fill="rgba(201,168,76,0.1)" stroke="rgba(201,168,76,0.3)" stroke-width="0.8"/>
-      <text x="750" y="592" font-family="monospace" font-size="8" fill="rgba(201,168,76,0.7)" text-anchor="middle">Full-Build</text>
-      <rect x="800" y="580" width="76" height="18" rx="9" fill="rgba(201,168,76,0.1)" stroke="rgba(201,168,76,0.3)" stroke-width="0.8"/>
-      <text x="838" y="592" font-family="monospace" font-size="8" fill="rgba(201,168,76,0.7)" text-anchor="middle">CA-Licensed</text>
-    </svg>
-
-    <!-- Layer 3: boom arm (faster parallax — moves with mouse) -->
-    <svg id="ml3" viewBox="0 0 900 680" style="position:absolute;width:min(95vw,900px);height:auto;" xmlns="http://www.w3.org/2000/svg">
-      <!-- Main boom arm — lattice truss style -->
-      <g transform="rotate(-42, 405, 490)" transform-origin="405 490">
-        <!-- Boom chord top -->
-        <line x1="405" y1="490" x2="405" y2="110" stroke="#C9A84C" stroke-width="3"/>
-        <!-- Boom chord bottom (parallel, offset) -->
-        <line x1="418" y1="490" x2="418" y2="115" stroke="#C9A84C" stroke-width="2"/>
-        <!-- Lattice web members -->
-        <line x1="405" y1="470" x2="418" y2="455" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="455" x2="405" y2="440" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="405" y1="440" x2="418" y2="425" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="425" x2="405" y2="410" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="405" y1="410" x2="418" y2="395" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="395" x2="405" y2="380" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="405" y1="380" x2="418" y2="365" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="365" x2="405" y2="350" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="405" y1="350" x2="418" y2="335" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="335" x2="405" y2="320" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="405" y1="320" x2="418" y2="305" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="305" x2="405" y2="290" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="405" y1="290" x2="418" y2="275" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="275" x2="405" y2="260" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="405" y1="260" x2="418" y2="245" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="245" x2="405" y2="230" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="405" y1="230" x2="418" y2="215" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="215" x2="405" y2="200" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="405" y1="200" x2="418" y2="185" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="185" x2="405" y2="170" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="405" y1="170" x2="418" y2="155" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="155" x2="405" y2="140" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="405" y1="140" x2="418" y2="125" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <line x1="418" y1="125" x2="405" y2="110" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
-        <!-- Boom tip cap -->
-        <circle cx="412" cy="110" r="5" fill="#C9A84C"/>
-        <circle cx="412" cy="110" r="2" fill="#080808"/>
-      </g>
-      <!-- Sheave/pulley at boom tip -->
-      <circle id="sheave" cx="590" cy="155" r="10" fill="none" stroke="#C9A84C" stroke-width="2"/>
-      <circle cx="590" cy="155" r="4" fill="#C9A84C"/>
-    </svg>
-
-    <!-- Layer 4: hook & cable (most parallax — swings) -->
-    <svg id="ml4" viewBox="0 0 900 680" style="position:absolute;width:min(95vw,900px);height:auto;" xmlns="http://www.w3.org/2000/svg">
-      <!-- Cable from sheave down to hook block -->
-      <line id="cable1" x1="590" y1="160" x2="590" y2="340" stroke="#C9A84C" stroke-width="1.5" opacity="0.8"/>
-      <line id="cable2" x1="593" y1="160" x2="593" y2="340" stroke="#C9A84C" stroke-width="0.8" opacity="0.4"/>
-      <!-- Hook block -->
-      <rect id="hookblock" x="574" y="340" width="32" height="20" rx="3" fill="#1A1A1A" stroke="#C9A84C" stroke-width="1.2"/>
-      <line x1="583" y1="340" x2="590" y2="330" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
-      <line x1="600" y1="340" x2="593" y2="330" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
-      <!-- Hook -->
-      <path id="hook" d="M590 360 Q590 395 605 400 Q625 405 625 385 Q625 370 610 368" fill="none" stroke="#C9A84C" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="590" cy="360" r="4" fill="#C9A84C"/>
-      <!-- Glow on hook -->
-      <circle cx="590" cy="380" r="18" fill="rgba(201,168,76,0.06)" filter="url(#hookglow)"/>
-      <defs>
-        <filter id="hookglow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="8" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-    </svg>
-
+  <!-- Top bar -->
+  <div style="position:absolute;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;z-index:10;">
+    <div style="font-size:10px;letter-spacing:4px;color:rgba(201,168,76,0.7);text-transform:uppercase;font-family:monospace;">Galore Projects · Machine Room</div>
+    <button onclick="closeMachine()" style="background:none;border:1px solid rgba(201,168,76,0.35);color:#C9A84C;font-size:10px;letter-spacing:2px;padding:7px 16px;cursor:pointer;font-family:monospace;transition:all .2s;" onmouseover="this.style.background='rgba(201,168,76,0.1)'" onmouseout="this.style.background='none'">✕ CLOSE</button>
   </div>
 
-  <!-- Title overlay bottom -->
-  <div style="position:absolute;bottom:80px;left:50%;transform:translateX(-50%);text-align:center;z-index:10;pointer-events:none;">
-    <div style="font-size:clamp(36px,7vw,72px);font-weight:900;color:#FAFAF8;letter-spacing:-1px;line-height:1;text-transform:uppercase;">MACHINE<br><span style="color:#C9A84C;">ROOM</span></div>
-    <div style="font-size:11px;letter-spacing:4px;color:rgba(201,168,76,0.6);margin-top:12px;text-transform:uppercase;">Move your mouse · Watch it respond</div>
+  <!-- Three.js canvas -->
+  <canvas id="crane-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+
+  <!-- Overlay: specs bottom-left -->
+  <div style="position:absolute;bottom:48px;left:64px;z-index:10;font-family:monospace;">
+    <div style="font-size:9px;letter-spacing:3px;color:rgba(201,168,76,0.5);margin-bottom:10px;text-transform:uppercase;">Technical Specs</div>
+    <div style="display:grid;grid-template-columns:110px auto;gap:4px 16px;font-size:11px;">
+      <span style="color:rgba(255,255,255,0.35);">Boom Reach</span><span style="color:rgba(255,255,255,0.75);">62 ft</span>
+      <span style="color:rgba(255,255,255,0.35);">Lift Capacity</span><span style="color:rgba(255,255,255,0.75);">40 Tons</span>
+      <span style="color:rgba(255,255,255,0.35);">License</span><span style="color:#C9A84C;">CSLB #1156432</span>
+      <span style="color:rgba(255,255,255,0.35);">Status</span><span style="color:#4CAF76;">● OPERATIONAL</span>
+    </div>
   </div>
 
-  <!-- CTA bottom -->
-  <a href="#" onclick="document.getElementById('machine-room').style.display='none';history.replaceState(null,'',window.location.pathname);document.getElementById('quote').scrollIntoView({behavior:'smooth'});return false;" style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);background:#C9A84C;color:#080808;font-size:11px;letter-spacing:3px;font-weight:800;padding:14px 32px;text-decoration:none;text-transform:uppercase;border-radius:2px;z-index:10;">Get A Quote →</a>
+  <!-- Overlay: title bottom-right -->
+  <div style="position:absolute;bottom:48px;right:64px;z-index:10;text-align:right;">
+    <div style="font-size:clamp(28px,4vw,52px);font-weight:900;color:#fff;letter-spacing:-1px;line-height:1;text-transform:uppercase;">MACHINE<br><span style="color:#C9A84C;">ROOM</span></div>
+    <div style="font-size:9px;letter-spacing:3px;color:rgba(201,168,76,0.5);margin-top:8px;text-transform:uppercase;">Move cursor · Watch it respond</div>
+  </div>
+
+  <!-- Tags -->
+  <div style="position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;">
+    <span style="font-size:9px;letter-spacing:2px;padding:5px 12px;border:1px solid rgba(201,168,76,0.25);color:rgba(201,168,76,0.6);font-family:monospace;border-radius:20px;">GP · v2</span>
+    <span style="font-size:9px;letter-spacing:2px;padding:5px 12px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:monospace;border-radius:20px;">Full-Build</span>
+    <span style="font-size:9px;letter-spacing:2px;padding:5px 12px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:monospace;border-radius:20px;">CA-Licensed</span>
+  </div>
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <script>
 (function(){
-  // ── Machine Room: open via /#machine ──
-  function openMachine(){
+
+  // ── Open / close ──
+  window.openMachine = function(){
     var el = document.getElementById('machine-room');
-    if(el) el.style.display = 'block';
-  }
+    el.style.display = 'block';
+    if(!window.__craneStarted) startCrane();
+  };
+  window.closeMachine = function(){
+    document.getElementById('machine-room').style.display = 'none';
+    history.replaceState(null,'',window.location.pathname);
+  };
   if(window.location.hash === '#machine') openMachine();
   window.addEventListener('hashchange', function(){
     if(window.location.hash === '#machine') openMachine();
   });
 
-  // ── Mouse parallax ──
-  var layers = [
-    {el: null, id:'ml1', x:0, y:0, strength:0.008},
-    {el: null, id:'ml2', x:0, y:0, strength:0.015},
-    {el: null, id:'ml3', x:0, y:0, strength:0.03},
-    {el: null, id:'ml4', x:0, y:0, strength:0.055},
-    {el: null, id:'ml0', x:0, y:0, strength:0.005},
-  ];
-  var mx = 0, my = 0, cx = 0, cy = 0;
-  var raf;
+  // ── Three.js crane ──
+  function startCrane(){
+    window.__craneStarted = true;
+    var canvas = document.getElementById('crane-canvas');
+    var W = window.innerWidth, H = window.innerHeight;
 
-  document.addEventListener('mousemove', function(e){
-    cx = e.clientX - window.innerWidth/2;
-    cy = e.clientY - window.innerHeight/2;
-  });
+    var renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, alpha: true});
+    renderer.setSize(W, H);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.9;
 
-  // Touch support
-  document.addEventListener('touchmove', function(e){
-    var t = e.touches[0];
-    cx = t.clientX - window.innerWidth/2;
-    cy = t.clientY - window.innerHeight/2;
-  }, {passive:true});
+    var scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x060608, 0.035);
 
-  function tick(){
-    mx += (cx - mx) * 0.06;
-    my += (cy - my) * 0.06;
-    layers.forEach(function(l){
-      if(!l.el) l.el = document.getElementById(l.id);
-      if(!l.el) return;
-      var dx = mx * l.strength * 100;
-      var dy = my * l.strength * 100;
-      // For ml3 (boom): also rotate slightly based on mouse X
-      if(l.id === 'ml3'){
-        var angle = mx * 0.008;
-        l.el.style.transform = 'translate('+dx+'px,'+dy+'px) rotate('+angle+'deg)';
-      } else if(l.id === 'ml4'){
-        // Hook swings more dramatically
-        var swing = mx * 0.02;
-        l.el.style.transform = 'translate('+(dx + swing*10)+'px,'+dy+'px)';
-      } else {
-        l.el.style.transform = 'translate('+dx+'px,'+dy+'px)';
-      }
+    var camera = new THREE.PerspectiveCamera(45, W/H, 0.1, 200);
+    camera.position.set(0, 8, 22);
+    camera.lookAt(0, 4, 0);
+
+    // ── Lights ──
+    scene.add(new THREE.AmbientLight(0x111118, 1.5));
+
+    var gold = new THREE.PointLight(0xC9A84C, 3, 30);
+    gold.position.set(2, 12, 4);
+    gold.castShadow = true;
+    scene.add(gold);
+
+    var fill = new THREE.PointLight(0x2244AA, 1.5, 40);
+    fill.position.set(-8, 6, 8);
+    scene.add(fill);
+
+    var rim = new THREE.DirectionalLight(0xffeedd, 0.6);
+    rim.position.set(5, 20, -10);
+    scene.add(rim);
+
+    // ── Materials ──
+    var steelMat = new THREE.MeshStandardMaterial({color:0x1a1a20, metalness:0.9, roughness:0.3});
+    var goldMat  = new THREE.MeshStandardMaterial({color:0xC9A84C, metalness:1.0, roughness:0.2, emissive:0x3a2800, emissiveIntensity:0.3});
+    var darkMat  = new THREE.MeshStandardMaterial({color:0x0d0d12, metalness:0.8, roughness:0.5});
+    var cabMat   = new THREE.MeshStandardMaterial({color:0xC9A84C, metalness:0.7, roughness:0.4});
+
+    // ── Ground ──
+    var ground = new THREE.Mesh(
+      new THREE.CircleGeometry(18, 64),
+      new THREE.MeshStandardMaterial({color:0x080810, metalness:0.3, roughness:0.9})
+    );
+    ground.rotation.x = -Math.PI/2;
+    ground.position.y = -0.01;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    // Grid lines on ground
+    var gridHelper = new THREE.GridHelper(24, 24, 0x1a1a2a, 0x111120);
+    gridHelper.position.y = 0.01;
+    scene.add(gridHelper);
+
+    // ── Crane group (whole crane rotates with mouse) ──
+    var craneGroup = new THREE.Group();
+    scene.add(craneGroup);
+
+    // Base platform
+    var base = new THREE.Mesh(new THREE.CylinderGeometry(1.4,1.8,0.5,8), steelMat);
+    base.position.y = 0.25;
+    base.castShadow = true;
+    craneGroup.add(base);
+
+    // Base ring gold accent
+    var baseRing = new THREE.Mesh(new THREE.TorusGeometry(1.6, 0.06, 8, 32), goldMat);
+    baseRing.rotation.x = Math.PI/2;
+    baseRing.position.y = 0.5;
+    craneGroup.add(baseRing);
+
+    // Mast — tower (lattice approximated with box)
+    var mastH = 10;
+    var mast = new THREE.Mesh(new THREE.BoxGeometry(0.55, mastH, 0.55), steelMat);
+    mast.position.y = 0.5 + mastH/2;
+    mast.castShadow = true;
+    craneGroup.add(mast);
+
+    // Mast corner edges (gold accent lines)
+    var edgeGeo = new THREE.BoxGeometry(0.06, mastH, 0.06);
+    var offsets = [[-0.27,-0.27],[0.27,-0.27],[-0.27,0.27],[0.27,0.27]];
+    offsets.forEach(function(o){
+      var e = new THREE.Mesh(edgeGeo, goldMat);
+      e.position.set(o[0], 0.5+mastH/2, o[1]);
+      craneGroup.add(e);
     });
-    raf = requestAnimationFrame(tick);
+
+    // Mast cross braces
+    for(var i=0; i<5; i++){
+      var brace = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.05, 0.05), steelMat);
+      brace.position.y = 1 + i*1.8;
+      craneGroup.add(brace);
+      var brace2 = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.55), steelMat);
+      brace2.position.y = 1.9 + i*1.8;
+      craneGroup.add(brace2);
+    }
+
+    // Slewing ring (turntable)
+    var slew = new THREE.Mesh(new THREE.CylinderGeometry(0.9,0.9,0.25,16), goldMat);
+    slew.position.y = 0.5 + mastH - 0.12;
+    craneGroup.add(slew);
+
+    // Operator cab
+    var cab = new THREE.Mesh(new THREE.BoxGeometry(1.3,1.1,1.1), cabMat);
+    cab.position.set(-0.4, 0.5+mastH+0.55, 0);
+    cab.castShadow = true;
+    craneGroup.add(cab);
+
+    // Cab windows (dark glass)
+    var winMat = new THREE.MeshStandardMaterial({color:0x001830, metalness:0.0, roughness:0.0, transparent:true, opacity:0.7, emissive:0x003366, emissiveIntensity:0.4});
+    var win = new THREE.Mesh(new THREE.BoxGeometry(0.05,0.5,0.7), winMat);
+    win.position.set(-1.02, 0.5+mastH+0.6, 0);
+    craneGroup.add(win);
+
+    // ── Jib (horizontal boom) group — rotates for hook animation ──
+    var jibGroup = new THREE.Group();
+    jibGroup.position.set(0, 0.5+mastH+0.2, 0);
+    craneGroup.add(jibGroup);
+
+    // Main jib
+    var jibL = 7;
+    var jib = new THREE.Mesh(new THREE.BoxGeometry(jibL, 0.18, 0.18), steelMat);
+    jib.position.set(jibL/2-0.3, 0, 0);
+    jib.castShadow = true;
+    jibGroup.add(jib);
+
+    // Jib edge rails (gold)
+    var jibTop = new THREE.Mesh(new THREE.BoxGeometry(jibL, 0.05, 0.05), goldMat);
+    jibTop.position.set(jibL/2-0.3, 0.12, 0);
+    jibGroup.add(jibTop);
+
+    // Counter jib
+    var cjibL = 2.5;
+    var cjib = new THREE.Mesh(new THREE.BoxGeometry(cjibL, 0.18, 0.18), steelMat);
+    cjib.position.set(-cjibL/2, 0, 0);
+    cjib.castShadow = true;
+    jibGroup.add(cjib);
+
+    // Counterweight
+    var cweight = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.6, 0.8), darkMat);
+    cweight.position.set(-cjibL-0.1, -0.3, 0);
+    cweight.castShadow = true;
+    jibGroup.add(cweight);
+
+    // Jib support struts
+    var strutMat = new THREE.MeshStandardMaterial({color:0xC9A84C, metalness:0.9, roughness:0.2});
+    [[1.5,1.2],[3.5,0.9],[5.5,0.5]].forEach(function(p){
+      var s = new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,p[1]+0.2,6), strutMat);
+      s.position.set(p[0], p[1]/2+0.1, 0);
+      s.rotation.z = -Math.atan2(p[0]-0.3, p[1]);
+      jibGroup.add(s);
+    });
+
+    // Peak / A-frame
+    var peak = new THREE.Mesh(new THREE.ConeGeometry(0.08, 1.5, 6), goldMat);
+    peak.position.set(0.3, 0.9, 0);
+    jibGroup.add(peak);
+
+    // ── Hook trolley (slides along jib) ──
+    var trolleyGroup = new THREE.Group();
+    jibGroup.add(trolleyGroup);
+
+    var trolley = new THREE.Mesh(new THREE.BoxGeometry(0.3,0.2,0.3), steelMat);
+    trolley.position.set(4, -0.1, 0);
+    trolleyGroup.add(trolley);
+
+    // Cable
+    var cableGeo = new THREE.CylinderGeometry(0.02, 0.02, 3.5, 4);
+    var cableMesh = new THREE.Mesh(cableGeo, goldMat);
+    cableMesh.position.set(4, -1.95, 0);
+    trolleyGroup.add(cableMesh);
+
+    // Hook block
+    var hookBlock = new THREE.Mesh(new THREE.BoxGeometry(0.4,0.3,0.4), steelMat);
+    hookBlock.position.set(4, -3.7, 0);
+    hookBlock.castShadow = true;
+    trolleyGroup.add(hookBlock);
+
+    // Hook — torus half
+    var hookGeo = new THREE.TorusGeometry(0.22, 0.05, 8, 20, Math.PI);
+    var hookMesh = new THREE.Mesh(hookGeo, goldMat);
+    hookMesh.position.set(4.22, -4.1, 0);
+    hookMesh.rotation.z = Math.PI/2;
+    trolleyGroup.add(hookMesh);
+
+    // Hook tip
+    var tip = new THREE.Mesh(new THREE.SphereGeometry(0.06,8,8), goldMat);
+    tip.position.set(4.44, -4.08, 0);
+    trolleyGroup.add(tip);
+
+    // Hook glow point light
+    var hookLight = new THREE.PointLight(0xC9A84C, 2, 4);
+    hookLight.position.set(4, -4, 0);
+    trolleyGroup.add(hookLight);
+
+    // ── Blueprint ring particles ──
+    var particles = new THREE.Group();
+    scene.add(particles);
+    var pGeo = new THREE.SphereGeometry(0.04, 4, 4);
+    var pMat = new THREE.MeshBasicMaterial({color:0xC9A84C});
+    for(var j=0; j<30; j++){
+      var p = new THREE.Mesh(pGeo, pMat);
+      var angle = (j/30)*Math.PI*2;
+      var r = 9 + Math.random()*3;
+      p.position.set(Math.cos(angle)*r, Math.random()*0.5, Math.sin(angle)*r);
+      p.userData.floatOffset = Math.random()*Math.PI*2;
+      particles.add(p);
+    }
+
+    // ── Mouse tracking ──
+    var mouse = {x:0, y:0};
+    var targetRot = {x:0, y:0};
+    var currentRot = {x:0, y:0};
+
+    window.addEventListener('mousemove', function(e){
+      mouse.x = (e.clientX/window.innerWidth - 0.5) * 2;
+      mouse.y = (e.clientY/window.innerHeight - 0.5) * 2;
+    });
+    window.addEventListener('touchmove', function(e){
+      mouse.x = (e.touches[0].clientX/window.innerWidth - 0.5) * 2;
+      mouse.y = (e.touches[0].clientY/window.innerHeight - 0.5) * 2;
+    }, {passive:true});
+
+    // ── Resize ──
+    window.addEventListener('resize', function(){
+      W = window.innerWidth; H = window.innerHeight;
+      camera.aspect = W/H;
+      camera.updateProjectionMatrix();
+      renderer.setSize(W, H);
+    });
+
+    // ── Animate ──
+    var clock = new THREE.Clock();
+    function animate(){
+      if(document.getElementById('machine-room').style.display === 'none'){
+        requestAnimationFrame(animate); return;
+      }
+      requestAnimationFrame(animate);
+      var t = clock.getElapsedTime();
+
+      // Smooth mouse follow
+      targetRot.y = mouse.x * 0.35;
+      targetRot.x = mouse.y * 0.12;
+      currentRot.x += (targetRot.x - currentRot.x) * 0.04;
+      currentRot.y += (targetRot.y - currentRot.y) * 0.04;
+
+      // Rotate whole crane with mouse
+      craneGroup.rotation.y = currentRot.y;
+      craneGroup.rotation.x = currentRot.x * 0.3;
+
+      // Jib sways slightly with mouse (like wind)
+      jibGroup.rotation.z = Math.sin(t*0.4)*0.012 + currentRot.y * 0.05;
+
+      // Hook trolley slides back/forth on jib
+      trolleyGroup.children.forEach(function(c){
+        c.position.x += Math.sin(t*0.3)*0.002;
+      });
+
+      // Cable sways
+      cableMesh.rotation.z = Math.sin(t*0.5)*0.04 + currentRot.y*0.08;
+
+      // Hook sway
+      hookMesh.rotation.z = Math.PI/2 + Math.sin(t*0.6)*0.06;
+
+      // Hook light pulse
+      hookLight.intensity = 1.5 + Math.sin(t*2)*0.5;
+
+      // Gold point light orbits slowly
+      gold.position.x = Math.sin(t*0.3)*5;
+      gold.position.z = Math.cos(t*0.3)*5;
+
+      // Particles float
+      particles.children.forEach(function(p){
+        p.position.y = Math.sin(t*0.8 + p.userData.floatOffset)*0.3 + 0.2;
+      });
+      particles.rotation.y = t*0.05;
+
+      // Slow camera drift
+      camera.position.x = Math.sin(t*0.07)*1.5 + currentRot.y*-0.8;
+      camera.position.y = 8 + Math.sin(t*0.05)*0.5;
+      camera.lookAt(0, 5, 0);
+
+      renderer.render(scene, camera);
+    }
+    animate();
   }
 
-  // Only run when machine room is visible
-  var obs = new MutationObserver(function(){
-    var el = document.getElementById('machine-room');
-    if(el && el.style.display !== 'none'){
-      if(!raf) tick();
-    } else {
-      if(raf){ cancelAnimationFrame(raf); raf = null; }
-    }
-  });
-  var mr = document.getElementById('machine-room');
-  if(mr) obs.observe(mr, {attributes:true, attributeFilter:['style']});
-  if(mr && mr.style.display !== 'none') tick();
 })();
 </script>
 
