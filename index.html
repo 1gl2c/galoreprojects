@@ -1243,62 +1243,76 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
 <!-- MACHINE ROOM — access via /#machine -->
-<div id="machine-room" style="display:none;position:fixed;inset:0;z-index:9999;overflow:hidden;background:#060608;">
+<div id="machine-room" style="display:none;position:fixed;inset:0;z-index:9999;overflow:hidden;background:#060608;font-family:Inter,sans-serif;">
+
+  <!-- Scanline overlay -->
+  <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:4;"></div>
 
   <!-- Corner brackets -->
-  <div style="position:absolute;top:20px;left:20px;width:36px;height:36px;border-top:1.5px solid #C9A84C;border-left:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
-  <div style="position:absolute;top:20px;right:20px;width:36px;height:36px;border-top:1.5px solid #C9A84C;border-right:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
-  <div style="position:absolute;bottom:20px;left:20px;width:36px;height:36px;border-bottom:1.5px solid #C9A84C;border-left:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
-  <div style="position:absolute;bottom:20px;right:20px;width:36px;height:36px;border-bottom:1.5px solid #C9A84C;border-right:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
+  <div style="position:absolute;top:22px;left:22px;width:32px;height:32px;border-top:1.5px solid #C9A84C;border-left:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
+  <div style="position:absolute;top:22px;right:22px;width:32px;height:32px;border-top:1.5px solid #C9A84C;border-right:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
+  <div style="position:absolute;bottom:22px;left:22px;width:32px;height:32px;border-bottom:1.5px solid #C9A84C;border-left:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
+  <div style="position:absolute;bottom:22px;right:22px;width:32px;height:32px;border-bottom:1.5px solid #C9A84C;border-right:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
 
   <!-- Top bar -->
-  <div style="position:absolute;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;z-index:10;">
-    <div style="font-size:10px;letter-spacing:4px;color:rgba(201,168,76,0.7);text-transform:uppercase;font-family:monospace;">Galore Projects · Machine Room</div>
-    <button onclick="closeMachine()" style="background:none;border:1px solid rgba(201,168,76,0.35);color:#C9A84C;font-size:10px;letter-spacing:2px;padding:7px 16px;cursor:pointer;font-family:monospace;transition:all .2s;" onmouseover="this.style.background='rgba(201,168,76,0.1)'" onmouseout="this.style.background='none'">✕ CLOSE</button>
+  <div style="position:absolute;top:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;z-index:10;">
+    <div style="font-size:10px;letter-spacing:4px;color:rgba(201,168,76,0.6);text-transform:uppercase;font-family:monospace;">Galore Projects · Machine Room</div>
+    <button onclick="closeMachine()" style="background:none;border:1px solid rgba(201,168,76,0.3);color:#C9A84C;font-size:10px;letter-spacing:2px;padding:7px 16px;cursor:pointer;font-family:monospace;" onmouseover="this.style.background='rgba(201,168,76,0.1)'" onmouseout="this.style.background='none'">✕ CLOSE</button>
   </div>
 
-  <!-- Three.js canvas -->
-  <canvas id="crane-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+  <!-- Crane image — parallax layer -->
+  <div id="mr-parallax" style="position:absolute;inset:-5%;z-index:2;will-change:transform;">
+    <img src="/crane3.png" id="mr-crane"
+      style="width:100%;height:100%;object-fit:contain;object-position:center;filter:brightness(1.05) contrast(1.1) saturate(0.9);mix-blend-mode:normal;transition:filter .3s;"
+      alt="Tower Crane"/>
+    <!-- Gold glow under crane -->
+    <div style="position:absolute;bottom:15%;left:50%;transform:translateX(-50%);width:400px;height:60px;background:radial-gradient(ellipse,rgba(201,168,76,0.2) 0%,transparent 70%);filter:blur(24px);border-radius:50%;pointer-events:none;"></div>
+  </div>
 
-  <!-- Overlay: specs bottom-left -->
-  <div style="position:absolute;bottom:48px;left:64px;z-index:10;font-family:monospace;">
+  <!-- Vignette -->
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(6,6,8,0.85) 100%);z-index:3;pointer-events:none;"></div>
+
+  <!-- Specs overlay — bottom left -->
+  <div style="position:absolute;bottom:52px;left:64px;z-index:10;font-family:monospace;">
     <div style="font-size:9px;letter-spacing:3px;color:rgba(201,168,76,0.5);margin-bottom:10px;text-transform:uppercase;">Technical Specs</div>
-    <div style="display:grid;grid-template-columns:110px auto;gap:4px 16px;font-size:11px;">
-      <span style="color:rgba(255,255,255,0.35);">Boom Reach</span><span style="color:rgba(255,255,255,0.75);">62 ft</span>
-      <span style="color:rgba(255,255,255,0.35);">Lift Capacity</span><span style="color:rgba(255,255,255,0.75);">40 Tons</span>
-      <span style="color:rgba(255,255,255,0.35);">License</span><span style="color:#C9A84C;">CSLB #1156432</span>
-      <span style="color:rgba(255,255,255,0.35);">Status</span><span style="color:#4CAF76;">● OPERATIONAL</span>
+    <div style="display:grid;grid-template-columns:110px auto;gap:5px 16px;font-size:11px;">
+      <span style="color:rgba(255,255,255,0.3);">Boom Reach</span><span style="color:rgba(255,255,255,0.7);">62 ft</span>
+      <span style="color:rgba(255,255,255,0.3);">Lift Capacity</span><span style="color:rgba(255,255,255,0.7);">40 Tons</span>
+      <span style="color:rgba(255,255,255,0.3);">License</span><span style="color:#C9A84C;">CSLB #1156432</span>
+      <span style="color:rgba(255,255,255,0.3);">Status</span><span style="color:#4CAF76;">● Operational</span>
     </div>
   </div>
 
-  <!-- Overlay: title bottom-right -->
-  <div style="position:absolute;bottom:48px;right:64px;z-index:10;text-align:right;">
-    <div style="font-size:clamp(28px,4vw,52px);font-weight:900;color:#fff;letter-spacing:-1px;line-height:1;text-transform:uppercase;">MACHINE<br><span style="color:#C9A84C;">ROOM</span></div>
-    <div style="font-size:9px;letter-spacing:3px;color:rgba(201,168,76,0.5);margin-top:8px;text-transform:uppercase;">Move cursor · Watch it respond</div>
+  <!-- Title — bottom right -->
+  <div style="position:absolute;bottom:52px;right:64px;z-index:10;text-align:right;">
+    <div style="font-size:clamp(32px,4.5vw,60px);font-weight:900;color:#FAFAF8;letter-spacing:-2px;line-height:1;text-transform:uppercase;">MACHINE<br><span style="color:#C9A84C;">ROOM</span></div>
+    <div style="font-size:9px;letter-spacing:3px;color:rgba(201,168,76,0.45);margin-top:10px;text-transform:uppercase;">Move cursor · Watch it respond</div>
   </div>
 
-  <!-- Tags -->
-  <div style="position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;">
-    <span style="font-size:9px;letter-spacing:2px;padding:5px 12px;border:1px solid rgba(201,168,76,0.25);color:rgba(201,168,76,0.6);font-family:monospace;border-radius:20px;">GP · v2</span>
-    <span style="font-size:9px;letter-spacing:2px;padding:5px 12px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:monospace;border-radius:20px;">Full-Build</span>
-    <span style="font-size:9px;letter-spacing:2px;padding:5px 12px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:monospace;border-radius:20px;">CA-Licensed</span>
+  <!-- Tags — bottom center -->
+  <div style="position:absolute;bottom:52px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;white-space:nowrap;">
+    <span style="font-size:9px;letter-spacing:2px;padding:5px 14px;border:1px solid rgba(201,168,76,0.3);color:rgba(201,168,76,0.7);font-family:monospace;border-radius:20px;">GP · v2</span>
+    <span style="font-size:9px;letter-spacing:2px;padding:5px 14px;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);font-family:monospace;border-radius:20px;">Full-Build</span>
+    <span style="font-size:9px;letter-spacing:2px;padding:5px 14px;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);font-family:monospace;border-radius:20px;">CA-Licensed</span>
   </div>
+
+  <!-- Crosshair cursor dot -->
+  <div id="mr-dot" style="position:fixed;width:6px;height:6px;background:#C9A84C;border-radius:50%;pointer-events:none;z-index:20;transform:translate(-50%,-50%);opacity:0;transition:opacity .3s;box-shadow:0 0 12px #C9A84C;"></div>
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <script>
 (function(){
-
-  // ── Open / close ──
   window.openMachine = function(){
-    var el = document.getElementById('machine-room');
-    el.style.display = 'block';
-    if(!window.__craneStarted) startCrane();
+    document.getElementById('machine-room').style.display = 'block';
+    document.getElementById('mr-dot').style.opacity = '1';
   };
   window.closeMachine = function(){
     document.getElementById('machine-room').style.display = 'none';
+    document.getElementById('mr-dot').style.opacity = '0';
     history.replaceState(null,'',window.location.pathname);
   };
   if(window.location.hash === '#machine') openMachine();
@@ -1306,296 +1320,34 @@ document.addEventListener('DOMContentLoaded', function() {
     if(window.location.hash === '#machine') openMachine();
   });
 
-  // ── Three.js crane ──
-  function startCrane(){
-    window.__craneStarted = true;
-    var canvas = document.getElementById('crane-canvas');
-    var W = window.innerWidth, H = window.innerHeight;
+  var mx = 0, my = 0, tx = 0, ty = 0;
+  var dot = document.getElementById('mr-dot');
+  var parallax = document.getElementById('mr-parallax');
 
-    var renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, alpha: true});
-    renderer.setSize(W, H);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.9;
+  document.addEventListener('mousemove', function(e){
+    mx = e.clientX; my = e.clientY;
+    if(dot){ dot.style.left = mx+'px'; dot.style.top = my+'px'; }
+  });
 
-    var scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x060608, 0.035);
+  document.addEventListener('touchmove', function(e){
+    mx = e.touches[0].clientX; my = e.touches[0].clientY;
+  },{passive:true});
 
-    var camera = new THREE.PerspectiveCamera(45, W/H, 0.1, 200);
-    camera.position.set(0, 8, 22);
-    camera.lookAt(0, 4, 0);
-
-    // ── Lights ──
-    scene.add(new THREE.AmbientLight(0x111118, 1.5));
-
-    var gold = new THREE.PointLight(0xC9A84C, 3, 30);
-    gold.position.set(2, 12, 4);
-    gold.castShadow = true;
-    scene.add(gold);
-
-    var fill = new THREE.PointLight(0x2244AA, 1.5, 40);
-    fill.position.set(-8, 6, 8);
-    scene.add(fill);
-
-    var rim = new THREE.DirectionalLight(0xffeedd, 0.6);
-    rim.position.set(5, 20, -10);
-    scene.add(rim);
-
-    // ── Materials ──
-    var steelMat = new THREE.MeshStandardMaterial({color:0x1a1a20, metalness:0.9, roughness:0.3});
-    var goldMat  = new THREE.MeshStandardMaterial({color:0xC9A84C, metalness:1.0, roughness:0.2, emissive:0x3a2800, emissiveIntensity:0.3});
-    var darkMat  = new THREE.MeshStandardMaterial({color:0x0d0d12, metalness:0.8, roughness:0.5});
-    var cabMat   = new THREE.MeshStandardMaterial({color:0xC9A84C, metalness:0.7, roughness:0.4});
-
-    // ── Ground ──
-    var ground = new THREE.Mesh(
-      new THREE.CircleGeometry(18, 64),
-      new THREE.MeshStandardMaterial({color:0x080810, metalness:0.3, roughness:0.9})
-    );
-    ground.rotation.x = -Math.PI/2;
-    ground.position.y = -0.01;
-    ground.receiveShadow = true;
-    scene.add(ground);
-
-    // Grid lines on ground
-    var gridHelper = new THREE.GridHelper(24, 24, 0x1a1a2a, 0x111120);
-    gridHelper.position.y = 0.01;
-    scene.add(gridHelper);
-
-    // ── Crane group (whole crane rotates with mouse) ──
-    var craneGroup = new THREE.Group();
-    scene.add(craneGroup);
-
-    // Base platform
-    var base = new THREE.Mesh(new THREE.CylinderGeometry(1.4,1.8,0.5,8), steelMat);
-    base.position.y = 0.25;
-    base.castShadow = true;
-    craneGroup.add(base);
-
-    // Base ring gold accent
-    var baseRing = new THREE.Mesh(new THREE.TorusGeometry(1.6, 0.06, 8, 32), goldMat);
-    baseRing.rotation.x = Math.PI/2;
-    baseRing.position.y = 0.5;
-    craneGroup.add(baseRing);
-
-    // Mast — tower (lattice approximated with box)
-    var mastH = 10;
-    var mast = new THREE.Mesh(new THREE.BoxGeometry(0.55, mastH, 0.55), steelMat);
-    mast.position.y = 0.5 + mastH/2;
-    mast.castShadow = true;
-    craneGroup.add(mast);
-
-    // Mast corner edges (gold accent lines)
-    var edgeGeo = new THREE.BoxGeometry(0.06, mastH, 0.06);
-    var offsets = [[-0.27,-0.27],[0.27,-0.27],[-0.27,0.27],[0.27,0.27]];
-    offsets.forEach(function(o){
-      var e = new THREE.Mesh(edgeGeo, goldMat);
-      e.position.set(o[0], 0.5+mastH/2, o[1]);
-      craneGroup.add(e);
-    });
-
-    // Mast cross braces
-    for(var i=0; i<5; i++){
-      var brace = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.05, 0.05), steelMat);
-      brace.position.y = 1 + i*1.8;
-      craneGroup.add(brace);
-      var brace2 = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.05, 0.55), steelMat);
-      brace2.position.y = 1.9 + i*1.8;
-      craneGroup.add(brace2);
+  (function loop(){
+    requestAnimationFrame(loop);
+    var mr = document.getElementById('machine-room');
+    if(!mr || mr.style.display === 'none') return;
+    var cx = (mx / window.innerWidth  - 0.5);
+    var cy = (my / window.innerHeight - 0.5);
+    tx += (cx - tx) * 0.05;
+    ty += (cy - ty) * 0.05;
+    if(parallax){
+      // Parallax: image shifts opposite to cursor, subtle
+      var dx = tx * -28;
+      var dy = ty * -16;
+      parallax.style.transform = 'translate('+dx+'px,'+dy+'px)';
     }
-
-    // Slewing ring (turntable)
-    var slew = new THREE.Mesh(new THREE.CylinderGeometry(0.9,0.9,0.25,16), goldMat);
-    slew.position.y = 0.5 + mastH - 0.12;
-    craneGroup.add(slew);
-
-    // Operator cab
-    var cab = new THREE.Mesh(new THREE.BoxGeometry(1.3,1.1,1.1), cabMat);
-    cab.position.set(-0.4, 0.5+mastH+0.55, 0);
-    cab.castShadow = true;
-    craneGroup.add(cab);
-
-    // Cab windows (dark glass)
-    var winMat = new THREE.MeshStandardMaterial({color:0x001830, metalness:0.0, roughness:0.0, transparent:true, opacity:0.7, emissive:0x003366, emissiveIntensity:0.4});
-    var win = new THREE.Mesh(new THREE.BoxGeometry(0.05,0.5,0.7), winMat);
-    win.position.set(-1.02, 0.5+mastH+0.6, 0);
-    craneGroup.add(win);
-
-    // ── Jib (horizontal boom) group — rotates for hook animation ──
-    var jibGroup = new THREE.Group();
-    jibGroup.position.set(0, 0.5+mastH+0.2, 0);
-    craneGroup.add(jibGroup);
-
-    // Main jib
-    var jibL = 7;
-    var jib = new THREE.Mesh(new THREE.BoxGeometry(jibL, 0.18, 0.18), steelMat);
-    jib.position.set(jibL/2-0.3, 0, 0);
-    jib.castShadow = true;
-    jibGroup.add(jib);
-
-    // Jib edge rails (gold)
-    var jibTop = new THREE.Mesh(new THREE.BoxGeometry(jibL, 0.05, 0.05), goldMat);
-    jibTop.position.set(jibL/2-0.3, 0.12, 0);
-    jibGroup.add(jibTop);
-
-    // Counter jib
-    var cjibL = 2.5;
-    var cjib = new THREE.Mesh(new THREE.BoxGeometry(cjibL, 0.18, 0.18), steelMat);
-    cjib.position.set(-cjibL/2, 0, 0);
-    cjib.castShadow = true;
-    jibGroup.add(cjib);
-
-    // Counterweight
-    var cweight = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.6, 0.8), darkMat);
-    cweight.position.set(-cjibL-0.1, -0.3, 0);
-    cweight.castShadow = true;
-    jibGroup.add(cweight);
-
-    // Jib support struts
-    var strutMat = new THREE.MeshStandardMaterial({color:0xC9A84C, metalness:0.9, roughness:0.2});
-    [[1.5,1.2],[3.5,0.9],[5.5,0.5]].forEach(function(p){
-      var s = new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,p[1]+0.2,6), strutMat);
-      s.position.set(p[0], p[1]/2+0.1, 0);
-      s.rotation.z = -Math.atan2(p[0]-0.3, p[1]);
-      jibGroup.add(s);
-    });
-
-    // Peak / A-frame
-    var peak = new THREE.Mesh(new THREE.ConeGeometry(0.08, 1.5, 6), goldMat);
-    peak.position.set(0.3, 0.9, 0);
-    jibGroup.add(peak);
-
-    // ── Hook trolley (slides along jib) ──
-    var trolleyGroup = new THREE.Group();
-    jibGroup.add(trolleyGroup);
-
-    var trolley = new THREE.Mesh(new THREE.BoxGeometry(0.3,0.2,0.3), steelMat);
-    trolley.position.set(4, -0.1, 0);
-    trolleyGroup.add(trolley);
-
-    // Cable
-    var cableGeo = new THREE.CylinderGeometry(0.02, 0.02, 3.5, 4);
-    var cableMesh = new THREE.Mesh(cableGeo, goldMat);
-    cableMesh.position.set(4, -1.95, 0);
-    trolleyGroup.add(cableMesh);
-
-    // Hook block
-    var hookBlock = new THREE.Mesh(new THREE.BoxGeometry(0.4,0.3,0.4), steelMat);
-    hookBlock.position.set(4, -3.7, 0);
-    hookBlock.castShadow = true;
-    trolleyGroup.add(hookBlock);
-
-    // Hook — torus half
-    var hookGeo = new THREE.TorusGeometry(0.22, 0.05, 8, 20, Math.PI);
-    var hookMesh = new THREE.Mesh(hookGeo, goldMat);
-    hookMesh.position.set(4.22, -4.1, 0);
-    hookMesh.rotation.z = Math.PI/2;
-    trolleyGroup.add(hookMesh);
-
-    // Hook tip
-    var tip = new THREE.Mesh(new THREE.SphereGeometry(0.06,8,8), goldMat);
-    tip.position.set(4.44, -4.08, 0);
-    trolleyGroup.add(tip);
-
-    // Hook glow point light
-    var hookLight = new THREE.PointLight(0xC9A84C, 2, 4);
-    hookLight.position.set(4, -4, 0);
-    trolleyGroup.add(hookLight);
-
-    // ── Blueprint ring particles ──
-    var particles = new THREE.Group();
-    scene.add(particles);
-    var pGeo = new THREE.SphereGeometry(0.04, 4, 4);
-    var pMat = new THREE.MeshBasicMaterial({color:0xC9A84C});
-    for(var j=0; j<30; j++){
-      var p = new THREE.Mesh(pGeo, pMat);
-      var angle = (j/30)*Math.PI*2;
-      var r = 9 + Math.random()*3;
-      p.position.set(Math.cos(angle)*r, Math.random()*0.5, Math.sin(angle)*r);
-      p.userData.floatOffset = Math.random()*Math.PI*2;
-      particles.add(p);
-    }
-
-    // ── Mouse tracking ──
-    var mouse = {x:0, y:0};
-    var targetRot = {x:0, y:0};
-    var currentRot = {x:0, y:0};
-
-    window.addEventListener('mousemove', function(e){
-      mouse.x = (e.clientX/window.innerWidth - 0.5) * 2;
-      mouse.y = (e.clientY/window.innerHeight - 0.5) * 2;
-    });
-    window.addEventListener('touchmove', function(e){
-      mouse.x = (e.touches[0].clientX/window.innerWidth - 0.5) * 2;
-      mouse.y = (e.touches[0].clientY/window.innerHeight - 0.5) * 2;
-    }, {passive:true});
-
-    // ── Resize ──
-    window.addEventListener('resize', function(){
-      W = window.innerWidth; H = window.innerHeight;
-      camera.aspect = W/H;
-      camera.updateProjectionMatrix();
-      renderer.setSize(W, H);
-    });
-
-    // ── Animate ──
-    var clock = new THREE.Clock();
-    function animate(){
-      if(document.getElementById('machine-room').style.display === 'none'){
-        requestAnimationFrame(animate); return;
-      }
-      requestAnimationFrame(animate);
-      var t = clock.getElapsedTime();
-
-      // Smooth mouse follow
-      targetRot.y = mouse.x * 0.35;
-      targetRot.x = mouse.y * 0.12;
-      currentRot.x += (targetRot.x - currentRot.x) * 0.04;
-      currentRot.y += (targetRot.y - currentRot.y) * 0.04;
-
-      // Rotate whole crane with mouse
-      craneGroup.rotation.y = currentRot.y;
-      craneGroup.rotation.x = currentRot.x * 0.3;
-
-      // Jib sways slightly with mouse (like wind)
-      jibGroup.rotation.z = Math.sin(t*0.4)*0.012 + currentRot.y * 0.05;
-
-      // Hook trolley slides back/forth on jib
-      trolleyGroup.children.forEach(function(c){
-        c.position.x += Math.sin(t*0.3)*0.002;
-      });
-
-      // Cable sways
-      cableMesh.rotation.z = Math.sin(t*0.5)*0.04 + currentRot.y*0.08;
-
-      // Hook sway
-      hookMesh.rotation.z = Math.PI/2 + Math.sin(t*0.6)*0.06;
-
-      // Hook light pulse
-      hookLight.intensity = 1.5 + Math.sin(t*2)*0.5;
-
-      // Gold point light orbits slowly
-      gold.position.x = Math.sin(t*0.3)*5;
-      gold.position.z = Math.cos(t*0.3)*5;
-
-      // Particles float
-      particles.children.forEach(function(p){
-        p.position.y = Math.sin(t*0.8 + p.userData.floatOffset)*0.3 + 0.2;
-      });
-      particles.rotation.y = t*0.05;
-
-      // Slow camera drift
-      camera.position.x = Math.sin(t*0.07)*1.5 + currentRot.y*-0.8;
-      camera.position.y = 8 + Math.sin(t*0.05)*0.5;
-      camera.lookAt(0, 5, 0);
-
-      renderer.render(scene, camera);
-    }
-    animate();
-  }
-
+  })();
 })();
 </script>
 
