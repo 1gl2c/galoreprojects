@@ -1245,11 +1245,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
 <!-- MACHINE ROOM — access via /#machine -->
 <div id="machine-room" style="display:none;position:fixed;inset:0;z-index:9999;overflow:hidden;background:#060608;font-family:Inter,sans-serif;">
 
-  <!-- Scanline overlay -->
-  <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:4;"></div>
+  <!-- Scanlines -->
+  <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.05) 3px,rgba(0,0,0,0.05) 4px);pointer-events:none;z-index:4;"></div>
 
   <!-- Corner brackets -->
   <div style="position:absolute;top:22px;left:22px;width:32px;height:32px;border-top:1.5px solid #C9A84C;border-left:1.5px solid #C9A84C;z-index:10;pointer-events:none;"></div>
@@ -1263,17 +1265,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <button onclick="closeMachine()" style="background:none;border:1px solid rgba(201,168,76,0.3);color:#C9A84C;font-size:10px;letter-spacing:2px;padding:7px 16px;cursor:pointer;font-family:monospace;" onmouseover="this.style.background='rgba(201,168,76,0.1)'" onmouseout="this.style.background='none'">✕ CLOSE</button>
   </div>
 
-  <!-- Crane image — parallax layer -->
-  <div id="mr-parallax" style="position:absolute;inset:-5%;z-index:2;will-change:transform;">
-    <img src="/crane3.png" id="mr-crane"
-      style="width:100%;height:100%;object-fit:contain;object-position:center;filter:brightness(1.05) contrast(1.1) saturate(0.9);mix-blend-mode:normal;transition:filter .3s;"
-      alt="Tower Crane"/>
-    <!-- Gold glow under crane -->
-    <div style="position:absolute;bottom:15%;left:50%;transform:translateX(-50%);width:400px;height:60px;background:radial-gradient(ellipse,rgba(201,168,76,0.2) 0%,transparent 70%);filter:blur(24px);border-radius:50%;pointer-events:none;"></div>
-  </div>
-
-  <!-- Vignette -->
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(6,6,8,0.85) 100%);z-index:3;pointer-events:none;"></div>
+  <!-- Three.js canvas -->
+  <canvas id="crane-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;z-index:2;"></canvas>
 
   <!-- Specs overlay — bottom left -->
   <div style="position:absolute;bottom:52px;left:64px;z-index:10;font-family:monospace;">
@@ -1292,27 +1285,31 @@ document.addEventListener('DOMContentLoaded', function() {
     <div style="font-size:9px;letter-spacing:3px;color:rgba(201,168,76,0.45);margin-top:10px;text-transform:uppercase;">Move cursor · Watch it respond</div>
   </div>
 
-  <!-- Tags — bottom center -->
+  <!-- Tags -->
   <div style="position:absolute;bottom:52px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;white-space:nowrap;">
-    <span style="font-size:9px;letter-spacing:2px;padding:5px 14px;border:1px solid rgba(201,168,76,0.3);color:rgba(201,168,76,0.7);font-family:monospace;border-radius:20px;">GP · v2</span>
+    <span style="font-size:9px;letter-spacing:2px;padding:5px 14px;border:1px solid rgba(201,168,76,0.3);color:rgba(201,168,76,0.7);font-family:monospace;border-radius:20px;">GP · v3</span>
     <span style="font-size:9px;letter-spacing:2px;padding:5px 14px;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);font-family:monospace;border-radius:20px;">Full-Build</span>
     <span style="font-size:9px;letter-spacing:2px;padding:5px 14px;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);font-family:monospace;border-radius:20px;">CA-Licensed</span>
   </div>
 
-  <!-- Crosshair cursor dot -->
-  <div id="mr-dot" style="position:fixed;width:6px;height:6px;background:#C9A84C;border-radius:50%;pointer-events:none;z-index:20;transform:translate(-50%,-50%);opacity:0;transition:opacity .3s;box-shadow:0 0 12px #C9A84C;"></div>
+  <!-- Loading indicator -->
+  <div id="mr-loading" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:8;flex-direction:column;gap:16px;">
+    <div style="width:40px;height:40px;border:2px solid rgba(201,168,76,0.2);border-top-color:#C9A84C;border-radius:50%;animation:mrspin 1s linear infinite;"></div>
+    <div style="font-family:monospace;font-size:11px;letter-spacing:3px;color:rgba(201,168,76,0.5);text-transform:uppercase;">Loading Crane Model</div>
+  </div>
+  <style>@keyframes mrspin{to{transform:rotate(360deg)}}</style>
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <script>
 (function(){
   window.openMachine = function(){
     document.getElementById('machine-room').style.display = 'block';
-    document.getElementById('mr-dot').style.opacity = '1';
+    if(!window.__craneLoaded) initCrane();
   };
   window.closeMachine = function(){
     document.getElementById('machine-room').style.display = 'none';
-    document.getElementById('mr-dot').style.opacity = '0';
     history.replaceState(null,'',window.location.pathname);
   };
   if(window.location.hash === '#machine') openMachine();
@@ -1320,34 +1317,147 @@ document.addEventListener('DOMContentLoaded', function() {
     if(window.location.hash === '#machine') openMachine();
   });
 
-  var mx = 0, my = 0, tx = 0, ty = 0;
-  var dot = document.getElementById('mr-dot');
-  var parallax = document.getElementById('mr-parallax');
+  function initCrane(){
+    window.__craneLoaded = true;
+    var canvas = document.getElementById('crane-canvas');
+    var W = window.innerWidth, H = window.innerHeight;
 
-  document.addEventListener('mousemove', function(e){
-    mx = e.clientX; my = e.clientY;
-    if(dot){ dot.style.left = mx+'px'; dot.style.top = my+'px'; }
-  });
+    var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true});
+    renderer.setSize(W, H);
+    renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+    renderer.outputEncoding = THREE.sRGBEncoding;
 
-  document.addEventListener('touchmove', function(e){
-    mx = e.touches[0].clientX; my = e.touches[0].clientY;
-  },{passive:true});
+    var scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x060608, 0.018);
 
-  (function loop(){
-    requestAnimationFrame(loop);
-    var mr = document.getElementById('machine-room');
-    if(!mr || mr.style.display === 'none') return;
-    var cx = (mx / window.innerWidth  - 0.5);
-    var cy = (my / window.innerHeight - 0.5);
-    tx += (cx - tx) * 0.05;
-    ty += (cy - ty) * 0.05;
-    if(parallax){
-      // Parallax: image shifts opposite to cursor, subtle
-      var dx = tx * -28;
-      var dy = ty * -16;
-      parallax.style.transform = 'translate('+dx+'px,'+dy+'px)';
+    var camera = new THREE.PerspectiveCamera(40, W/H, 0.1, 500);
+    camera.position.set(0, 4, 18);
+    camera.lookAt(0, 3, 0);
+
+    // Lights
+    scene.add(new THREE.AmbientLight(0x111118, 2));
+    var goldLight = new THREE.PointLight(0xC9A84C, 4, 60);
+    goldLight.position.set(6, 14, 8);
+    goldLight.castShadow = true;
+    scene.add(goldLight);
+    var blueLight = new THREE.PointLight(0x2244BB, 2, 40);
+    blueLight.position.set(-8, 6, 10);
+    scene.add(blueLight);
+    var rimLight = new THREE.DirectionalLight(0xfff5e0, 0.8);
+    rimLight.position.set(-5, 20, -8);
+    scene.add(rimLight);
+
+    // Ground
+    var ground = new THREE.Mesh(
+      new THREE.PlaneGeometry(60, 60),
+      new THREE.MeshStandardMaterial({color:0x080810, roughness:0.9, metalness:0.2})
+    );
+    ground.rotation.x = -Math.PI/2;
+    ground.receiveShadow = true;
+    scene.add(ground);
+    scene.add(new THREE.GridHelper(40, 40, 0x111120, 0x0d0d18));
+
+    // Load GLB
+    var loader = new THREE.GLTFLoader ? new THREE.GLTFLoader() : null;
+    if(!loader){
+      // GLTFLoader not bundled in r134 CDN — load it separately
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js';
+      s.onload = function(){ loadModel(); };
+      document.head.appendChild(s);
+    } else { loadModel(); }
+
+    var craneModel = null;
+    function loadModel(){
+      var loader = new THREE.GLTFLoader();
+      loader.load('/crane.glb', function(gltf){
+        var model = gltf.scene;
+        // Center and scale model
+        var box = new THREE.Box3().setFromObject(model);
+        var size = box.getSize(new THREE.Vector3());
+        var center = box.getCenter(new THREE.Vector3());
+        var maxDim = Math.max(size.x, size.y, size.z);
+        var scale = 10 / maxDim;
+        model.scale.setScalar(scale);
+        model.position.set(-center.x*scale, -box.min.y*scale, -center.z*scale);
+
+        // Gold tint on metallic materials
+        model.traverse(function(node){
+          if(node.isMesh){
+            node.castShadow = true;
+            node.receiveShadow = true;
+            if(node.material){
+              node.material.envMapIntensity = 1.5;
+            }
+          }
+        });
+
+        scene.add(model);
+        craneModel = model;
+        document.getElementById('mr-loading').style.display = 'none';
+      }, function(xhr){
+        var pct = Math.round(xhr.loaded/xhr.total*100);
+        var label = document.querySelector('#mr-loading div:last-child');
+        if(label) label.textContent = 'Loading... ' + pct + '%';
+      }, function(err){
+        console.error('GLB load error', err);
+        document.getElementById('mr-loading').innerHTML = '<div style="color:#C9A84C;font-family:monospace;font-size:12px;letter-spacing:2px;">Model load failed</div>';
+      });
     }
-  })();
+
+    // Mouse
+    var mx = 0, my = 0, tx = 0, ty = 0;
+    var autoRot = 0;
+    window.addEventListener('mousemove', function(e){
+      mx = (e.clientX/window.innerWidth  - 0.5) * 2;
+      my = (e.clientY/window.innerHeight - 0.5) * 2;
+    });
+    window.addEventListener('touchmove', function(e){
+      mx = (e.touches[0].clientX/window.innerWidth  - 0.5) * 2;
+      my = (e.touches[0].clientY/window.innerHeight - 0.5) * 2;
+    },{passive:true});
+
+    // Resize
+    window.addEventListener('resize', function(){
+      W = window.innerWidth; H = window.innerHeight;
+      camera.aspect = W/H; camera.updateProjectionMatrix();
+      renderer.setSize(W, H);
+    });
+
+    var clock = new THREE.Clock();
+    (function animate(){
+      requestAnimationFrame(animate);
+      if(document.getElementById('machine-room').style.display==='none') return;
+      var t = clock.getElapsedTime();
+
+      // Smooth mouse follow
+      tx += (mx - tx) * 0.04;
+      ty += (my - ty) * 0.04;
+
+      if(craneModel){
+        // Mouse controls Y rotation, X tilt
+        craneModel.rotation.y = tx * 0.7;
+        craneModel.rotation.x = ty * 0.08;
+        // Subtle auto-bob
+        craneModel.position.y += Math.sin(t*0.6)*0.003;
+      }
+
+      // Orbit gold light
+      goldLight.position.x = Math.sin(t*0.3)*8;
+      goldLight.position.z = Math.cos(t*0.3)*8;
+
+      // Camera subtle drift
+      camera.position.x = tx * -1.5;
+      camera.position.y = 4 + ty * -0.8;
+      camera.lookAt(0, 3, 0);
+
+      renderer.render(scene, camera);
+    })();
+  }
 })();
 </script>
 
