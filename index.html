@@ -1067,24 +1067,226 @@ footer{background:#FAFAF8;padding:2.5rem;display:flex;align-items:center;justify
   <section class="section" id="services">
     <div class="section-header reveal">
       <div class="section-eyebrow">What We Do</div>
-      <div class="section-title">Full-Scope Construction Services</div>
-      <div class="section-sub">Every phase. Every project type. One licensed contractor you can trust.</div>
+      <div class="section-title">Full-Scope Services</div>
+      <div class="section-sub">Construction. Maintenance. Facilities. Government. One licensed contractor for every need.</div>
     </div>
-    <div class="services-grid reveal">
-      <div class="service-card"><div class="service-icon"><i class="ti ti-building"></i></div><div class="service-name">New Construction</div><div class="service-desc">Ground-up residential and commercial builds, custom homes, ADUs, and mixed-use developments.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-tools"></i></div><div class="service-name">Remodeling &amp; Renovation</div><div class="service-desc">Full-home, kitchen, and bath remodels. Permits handled. Delivered on schedule and on budget.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-backhoe"></i></div><div class="service-name">Demolition</div><div class="service-desc">Selective and full demolition for residential and commercial sites. Safe, permitted, and clean.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-home-plus"></i></div><div class="service-name">ADU &amp; Additions</div><div class="service-desc">Accessory dwelling units, garage conversions, and room additions that maximize property value.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-building-skyscraper"></i></div><div class="service-name">Commercial Build-Out</div><div class="service-desc">Retail, office, and restaurant tenant improvements. Code compliant, delivered on budget.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-droplet"></i></div><div class="service-name">Concrete &amp; Masonry</div><div class="service-desc">Foundations, slabs, driveways, retaining walls, stamped concrete, and block work done right.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-wind"></i></div><div class="service-name">HVAC</div><div class="service-desc">Full HVAC installation, replacement, and upgrades for residential and commercial properties.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-plug"></i></div><div class="service-name">Electrical</div><div class="service-desc">Panel upgrades, rewiring, EV charger installation, and full electrical for new builds and remodels.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-droplets"></i></div><div class="service-name">Plumbing</div><div class="service-desc">Rough-in, re-pipe, water heaters, fixture installs, and full plumbing for new construction.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-solar-panel"></i></div><div class="service-name">Solar &amp; Energy</div><div class="service-desc">Solar panel installation, battery storage, and energy-efficient upgrades for homes and businesses.</div></div>
-      <div class="service-card"><div class="service-icon"><i class="ti ti-fence"></i></div><div class="service-name">Hardscape &amp; Grading</div><div class="service-desc">Site grading, drainage, patios, walkways, fencing, and outdoor living spaces.</div></div>
-      <div class="service-card service-card--featured"><div class="service-icon"><i class="ti ti-map-2"></i></div><div class="service-name">Land Development</div><div class="service-desc">Partnering with investors to acquire raw and entitled land across California. We underwrite, entitle, build, and sell — full-cycle from acquisition to exit.</div></div>
+
+    <!-- Category filter tabs -->
+    <div class="svc-tabs" id="svcTabs">
+      <button class="svc-tab active" onclick="filterSvc(this,'all')">All Services</button>
+      <button class="svc-tab" onclick="filterSvc(this,'construction')">Construction</button>
+      <button class="svc-tab" onclick="filterSvc(this,'renovation')">Renovation</button>
+      <button class="svc-tab" onclick="filterSvc(this,'site')">Site Work</button>
+      <button class="svc-tab" onclick="filterSvc(this,'concrete')">Concrete</button>
+      <button class="svc-tab" onclick="filterSvc(this,'fencing')">Fencing</button>
+      <button class="svc-tab" onclick="filterSvc(this,'landscape')">Landscaping</button>
+      <button class="svc-tab" onclick="filterSvc(this,'demo')">Demolition</button>
+      <button class="svc-tab" onclick="filterSvc(this,'facility')">Facility</button>
+      <button class="svc-tab" onclick="filterSvc(this,'ada')">ADA</button>
+      <button class="svc-tab" onclick="filterSvc(this,'cleaning')">Cleaning</button>
+      <button class="svc-tab" onclick="filterSvc(this,'roofing')">Roofing</button>
+      <button class="svc-tab" onclick="filterSvc(this,'painting')">Painting</button>
+      <button class="svc-tab" onclick="filterSvc(this,'energy')">Energy</button>
+      <button class="svc-tab" onclick="filterSvc(this,'emergency')">Emergency</button>
+      <button class="svc-tab" onclick="filterSvc(this,'government')">Government</button>
+      <button class="svc-tab" onclick="filterSvc(this,'specialty')">Specialty</button>
     </div>
+
+    <!-- Category cards -->
+    <div class="svc-cat-grid" id="svcGrid">
+
+      <div class="svc-cat" data-cat="construction">
+        <div class="svc-cat-header"><i class="ti ti-building-skyscraper"></i><span>Construction &amp; Development</span></div>
+        <ul class="svc-list">
+          <li>General Contracting</li><li>Construction Management</li><li>Design-Build Services</li>
+          <li>Residential Construction</li><li>Commercial Construction</li><li>Multi-Family Construction</li>
+          <li>Mixed-Use Development</li><li>Ground-Up Construction</li><li>ADU Construction</li>
+          <li>Development Consulting</li><li>Owner Representation</li><li>Project Management</li>
+          <li>Preconstruction Services</li><li>Construction Consulting</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="renovation">
+        <div class="svc-cat-header"><i class="ti ti-tools"></i><span>Renovation &amp; Remodeling</span></div>
+        <ul class="svc-list">
+          <li>Tenant Improvements</li><li>Interior Renovations</li><li>Exterior Renovations</li>
+          <li>Commercial Remodeling</li><li>Residential Remodeling</li><li>Facility Modernization</li>
+          <li>Property Rehabilitation</li><li>Unit Turnovers</li><li>Capital Improvements</li>
+          <li>Value-Add Renovations</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="site">
+        <div class="svc-cat-header"><i class="ti ti-backhoe"></i><span>Site Work &amp; Land Development</span></div>
+        <ul class="svc-list">
+          <li>Site Preparation</li><li>Site Improvements</li><li>Land Clearing</li>
+          <li>Grading</li><li>Excavation Coordination</li><li>Trenching</li>
+          <li>Drainage Improvements</li><li>Utility Coordination</li><li>Erosion Control</li>
+          <li>Stormwater Improvements</li><li>Roadway Improvements</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="concrete">
+        <div class="svc-cat-header"><i class="ti ti-wall"></i><span>Concrete &amp; Masonry</span></div>
+        <ul class="svc-list">
+          <li>Concrete Flatwork</li><li>Sidewalk Construction</li><li>Driveways</li>
+          <li>Curbs &amp; Gutters</li><li>Foundations</li><li>Retaining Walls</li>
+          <li>Concrete Repair</li><li>Decorative Concrete</li><li>ADA Ramps</li>
+          <li>Masonry Repair</li><li>Block Walls</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="fencing">
+        <div class="svc-cat-header"><i class="ti ti-fence"></i><span>Fencing &amp; Security</span></div>
+        <ul class="svc-list">
+          <li>Chain Link Fencing</li><li>Vinyl Fencing</li><li>Wood Fencing</li>
+          <li>Wrought Iron Fencing</li><li>Security Fencing</li><li>Privacy Fencing</li>
+          <li>Temporary Construction Fencing</li><li>Gates</li><li>Access Gates</li>
+          <li>Security Barriers</li><li>Perimeter Security</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="landscape">
+        <div class="svc-cat-header"><i class="ti ti-tree"></i><span>Landscaping &amp; Grounds</span></div>
+        <ul class="svc-list">
+          <li>Landscaping Installation</li><li>Landscaping Maintenance</li><li>Irrigation Systems</li>
+          <li>Artificial Turf</li><li>Tree Trimming</li><li>Tree Removal</li>
+          <li>Weed Abatement</li><li>Grounds Maintenance</li><li>Outdoor Beautification</li>
+          <li>Hardscape Installation</li><li>Park Improvements</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="demo">
+        <div class="svc-cat-header"><i class="ti ti-bulldozer"></i><span>Demolition &amp; Environmental</span></div>
+        <ul class="svc-list">
+          <li>Selective Demolition</li><li>Interior Demolition</li><li>Structural Demolition</li>
+          <li>Site Clearing</li><li>Debris Removal</li><li>Junk Removal</li>
+          <li>Bulk Trash Removal</li><li>Construction Waste Removal</li><li>Hauling Services</li>
+          <li>Property Cleanouts</li><li>Eviction Cleanouts</li><li>Illegal Dumping Cleanup</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="facility">
+        <div class="svc-cat-header"><i class="ti ti-building-community"></i><span>Facility Maintenance</span></div>
+        <ul class="svc-list">
+          <li>Facility Maintenance</li><li>Building Maintenance</li><li>Property Maintenance</li>
+          <li>Preventative Maintenance</li><li>Emergency Repairs</li><li>Handyman Services</li>
+          <li>Repair &amp; Replacement Services</li><li>Facility Support Services</li><li>Asset Preservation</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="ada">
+        <div class="svc-cat-header"><i class="ti ti-accessible"></i><span>ADA &amp; Accessibility</span></div>
+        <ul class="svc-list">
+          <li>ADA Compliance Upgrades</li><li>Accessibility Improvements</li><li>Mobility Modifications</li>
+          <li>Handrail Installation</li><li>Safety Improvements</li><li>Code Compliance Upgrades</li>
+          <li>Accessible Restroom Improvements</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="cleaning">
+        <div class="svc-cat-header"><i class="ti ti-sparkles"></i><span>Cleaning &amp; Janitorial</span></div>
+        <ul class="svc-list">
+          <li>Construction Cleanup</li><li>Post-Construction Cleanup</li><li>Janitorial Services</li>
+          <li>Facility Cleaning</li><li>Deep Cleaning Services</li><li>Pressure Washing</li>
+          <li>Graffiti Removal</li><li>Exterior Cleaning</li><li>Move-In/Move-Out Cleaning</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="roofing">
+        <div class="svc-cat-header"><i class="ti ti-home-shield"></i><span>Roofing &amp; Exterior</span></div>
+        <ul class="svc-list">
+          <li>Roof Repair Coordination</li><li>Roof Replacement Coordination</li><li>Waterproofing</li>
+          <li>Exterior Building Repairs</li><li>Siding Replacement</li><li>Stucco Repair</li>
+          <li>Exterior Painting</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="painting">
+        <div class="svc-cat-header"><i class="ti ti-brush"></i><span>Painting &amp; Finishes</span></div>
+        <ul class="svc-list">
+          <li>Interior Painting</li><li>Exterior Painting</li><li>Commercial Painting</li>
+          <li>Residential Painting</li><li>Protective Coatings</li><li>Surface Preparation</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="energy">
+        <div class="svc-cat-header"><i class="ti ti-solar-panel"></i><span>Energy &amp; Sustainability</span></div>
+        <ul class="svc-list">
+          <li>Solar System Installation</li><li>EV Charging Station Installation</li>
+          <li>Energy Efficiency Upgrades</li><li>LED Retrofits</li>
+          <li>Water Conservation Improvements</li><li>Green Building Improvements</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="emergency">
+        <div class="svc-cat-header"><i class="ti ti-alert-triangle"></i><span>Emergency &amp; Disaster Response</span></div>
+        <ul class="svc-list">
+          <li>Emergency Board-Up</li><li>Fire Damage Cleanup</li><li>Water Damage Mitigation</li>
+          <li>Storm Cleanup</li><li>Emergency Site Stabilization</li><li>Disaster Recovery Support</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="government">
+        <div class="svc-cat-header"><i class="ti ti-building-arch"></i><span>Government &amp; Public Sector</span></div>
+        <ul class="svc-list">
+          <li>Public Works Support Services</li><li>School Facility Improvements</li>
+          <li>Municipal Facility Improvements</li><li>Park Improvements</li>
+          <li>Community Facility Improvements</li><li>Government Contracting Services</li>
+        </ul>
+      </div>
+
+      <div class="svc-cat" data-cat="specialty">
+        <div class="svc-cat-header"><i class="ti ti-star"></i><span>Specialty Services</span></div>
+        <ul class="svc-list">
+          <li>Move Management</li><li>Relocation Services</li><li>Storage Solutions</li>
+          <li>Material Procurement</li><li>Vendor Management</li>
+          <li>Construction Staffing Coordination</li><li>Site Logistics</li><li>Temporary Facilities</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- CTA strip -->
+    <div style="text-align:center;margin-top:3rem;">
+      <a href="#quote" class="btn-gold" style="display:inline-block;background:#C9A84C;color:#1C1C1C;font-weight:700;font-size:12px;letter-spacing:2px;padding:16px 36px;text-decoration:none;text-transform:uppercase;border-radius:3px;">Get a Free Quote &rarr;</a>
+    </div>
+
   </section>
+
+  <style>
+  /* ── Service category tabs ── */
+  .svc-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2.5rem;justify-content:center;}
+  .svc-tab{background:none;border:1px solid #E8E3DB;color:#6B6560;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:8px 16px;cursor:pointer;border-radius:3px;transition:all .2s;font-family:inherit;}
+  .svc-tab:hover,.svc-tab.active{background:#C9A84C;border-color:#C9A84C;color:#1C1C1C;font-weight:700;}
+  /* ── Category grid ── */
+  .svc-cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;}
+  .svc-cat{background:#FAFAF8;border:1.5px solid #EEEBE4;border-radius:10px;overflow:hidden;transition:box-shadow .2s,border-color .2s;}
+  .svc-cat:hover{border-color:#C9A84C;box-shadow:0 4px 20px rgba(201,168,76,0.1);}
+  .svc-cat-header{display:flex;align-items:center;gap:10px;padding:16px 20px;background:#1C1C1C;color:#C9A84C;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+  .svc-cat-header i{font-size:16px;flex-shrink:0;}
+  .svc-list{list-style:none;padding:14px 20px 18px;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;}
+  .svc-list li{font-size:12px;color:#4A4540;padding-left:12px;position:relative;line-height:1.4;}
+  .svc-list li::before{content:"·";position:absolute;left:0;color:#C9A84C;font-weight:700;}
+  /* Hide/show filter */
+  .svc-cat.hidden{display:none;}
+  @media(max-width:600px){
+    .svc-list{grid-template-columns:1fr;}
+    .svc-tabs{gap:6px;}
+    .svc-tab{font-size:10px;padding:6px 12px;}
+  }
+  </style>
+
+  <script>
+  function filterSvc(btn, cat){
+    document.querySelectorAll('.svc-tab').forEach(function(t){t.classList.remove('active');});
+    btn.classList.add('active');
+    document.querySelectorAll('.svc-cat').forEach(function(c){
+      if(cat === 'all' || c.dataset.cat === cat) c.classList.remove('hidden');
+      else c.classList.add('hidden');
+    });
+  }
+  </script>
 
   <section class="section section-alt" id="process">
     <div class="section-header reveal">
