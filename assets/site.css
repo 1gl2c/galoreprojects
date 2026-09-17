@@ -186,3 +186,30 @@ address { font-style: normal; }
   .site-footer { color:black; padding:20px 0; }
   .footer-name,.footer-name span { color:black; }
 }
+
+/* Form remains visibly unavailable until the server's single launch switch is on. */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.inquiry-panel { margin-top: 64px; border-top: 1px solid var(--line); padding-top: 40px; max-width: 800px; }
+.inquiry-panel h3 { font-size: clamp(28px,4vw,42px); letter-spacing: -.045em; margin-bottom: 20px; }
+.inquiry-panel fieldset { padding: 0; margin: 0; border: 0; min-width: 0; }
+.form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 24px; }
+.form-wide { grid-column: 1/-1; }
+.form-field label { display: block; color: var(--paper); font-size: 18px; margin-bottom: 8px; }
+.form-field label span { color: var(--muted); font-size: 16px; }
+.form-field input, .form-field textarea { display: block; width: 100%; max-width: 100%; min-height: 48px; padding: 12px; font: inherit; font-size: 18px; border: 1px solid #94998d; border-radius: 0; background: #1e241d; color: var(--paper); }
+.form-field textarea { resize: vertical; }
+.form-field [aria-invalid=true] { border: 2px solid #ffb4a9; }
+.form-field .field-error { color: #ffb4a9 !important; margin: 6px 0 0; font-size: 16px; }
+.field-error:empty { display: none; }
+.inquiry-panel .field-hint { font-size: 16px; margin-bottom: 12px; }
+.inquiry-panel fieldset>.field-hint { margin-top: 24px; }
+.inquiry-panel :disabled { cursor: not-allowed; opacity: 1; }
+.inquiry-panel fieldset:disabled input, .inquiry-panel fieldset:disabled textarea { background: #181d17; border-style: dashed; }
+.inquiry-panel button:disabled { background: #c0c3b9; border-color: #c0c3b9; color: var(--ink); }
+.form-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.form-status:not(:empty) { border-left: 3px solid var(--gold); padding: 14px 18px; margin: 24px 0; color: var(--paper) !important; }
+.text-button { background: none; border: 0; padding: 10px 0; min-height: 44px; color: var(--gold); text-decoration: underline; text-underline-offset: .3em; }
+html { scroll-padding-bottom: 100px; }
+:where(a, button, input, textarea, [tabindex]) { scroll-margin-top: 126px; scroll-margin-bottom: 100px; }
+@media (max-width:700px) { .form-grid { grid-template-columns: 1fr; } .inquiry-panel { margin-top: 48px; } }
+@media (forced-colors:active) { .button,.contact-bar a,.motion-control { border: 1px solid ButtonText; } :focus-visible { outline-color: Highlight; } }
