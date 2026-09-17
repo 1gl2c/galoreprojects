@@ -2,7 +2,10 @@
   "name": "galoreprojects",
   "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "resend": "^3.2.0"
-  }
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/preview.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": { "node": ">=22" }
 }
