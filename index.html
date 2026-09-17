@@ -8,7 +8,8 @@
   <meta name="description" content="Galore Projects. Class B general building contractor based in San Diego, working in San Diego and Los Angeles. Bid inquiries: bids@galoreprojects.com.">
   <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/site.css">
-  <script src="/assets/site.js" defer></script>
+  <link rel="preload" href="/assets/fonts/syne-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="/assets/site.js" type="module"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -17,6 +18,10 @@
     <nav aria-label="Main navigation"><a href="/" aria-current="page">Home</a><a href="/work/">Work</a><a href="/qualifications/">Qualifications</a></nav>
   </header>
   <section class="cover" aria-labelledby="cover-title" data-cover>
+    <div class="cover-media" aria-hidden="true">
+      <img class="cover-poster" src="/assets/media/site-drone-poster.webp" width="1280" height="720" alt="" fetchpriority="high">
+      <video class="cover-video" data-cover-video data-desktop="/assets/media/site-drone-desktop.mp4" data-mobile="/assets/media/site-drone-mobile.mp4" muted loop playsinline preload="none" tabindex="-1"></video>
+    </div>
     <div class="cover-grid" aria-hidden="true"></div>
     <div class="cover-inner">
       <p class="eyebrow">San Diego + Los Angeles</p>
@@ -24,12 +29,13 @@
       <p class="cover-description">Class B General Building Contractor.</p>
       <a class="button enter" href="#main" data-enter>Enter site <span aria-hidden="true">↓</span></a>
     </div>
+    <div class="cover-media-meta"><p>In progress. Site cleared and graded.</p><button class="motion-control" type="button" data-motion-toggle aria-label="Play background video" hidden><span data-motion-label>Play video</span><span aria-hidden="true" data-motion-icon>▷</span></button></div>
     <p class="cover-caption">CSLB #1156432 <span>DIR #2000027910</span></p>
   </section>
   <main id="main" tabindex="-1">
     <section class="intro section">
       <p class="eyebrow">Based in San Diego</p>
-      <h1 class="display">Built right.<br><span>Priced fairly.</span></h1>
+      <h1 class="display">built right.<br><span>priced fairly.</span></h1>
       <div class="intro-bottom"><p class="lede">A Class B general building contractor working in San Diego and Los Angeles.</p><a class="text-link" href="mailto:bids@galoreprojects.com">Send a bid invitation <span aria-hidden="true">↗</span></a></div>
       <dl class="credential-strip"><div><dt>CSLB license</dt><dd>#1156432</dd></div><div><dt>DIR public works</dt><dd>#2000027910</dd></div><div><dt>General liability</dt><dd>$2M</dd></div></dl>
       <p class="supporting">Small Business / Micro certified · SB for Public Works certified · Minority-Owned Business Enterprise (MBE)</p>

@@ -6,11 +6,13 @@ The local review intentionally has no active intake form. `/api/quote` returns 5
 
 Primary inquiry action: `mailto:bids@galoreprojects.com`.
 
-## Information needed from the owner
+## Confirmed setup and remaining handoff
 
-1. Which provider manages DNS for galoreprojects.com?
-2. Which Resend account should send the site's mail, and is galoreprojects.com or a subdomain already verified there?
-3. Confirm that bids@galoreprojects.com is an active inbox and identify who can confirm receipt of a controlled test at the functional review gate.
+- DNS provider: GoDaddy. Owner has DNS access.
+- bids@galoreprojects.com: owner confirms the inbox receives mail.
+- Resend: no verified sending domain yet. Brother holds account access.
+- Pending: brother adds the proposed sending domain and provides the exact DNS table. Follow GODADDY-DNS.md; no shared login is needed.
+- Pending for Gate 3: identify who will confirm receipt of the controlled delivery test.
 
 Do not paste passwords, API keys, or DNS-account credentials into chat. Configure secrets in the hosting dashboard or use the authenticated account interface.
 

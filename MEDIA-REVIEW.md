@@ -43,3 +43,11 @@ Four `Screenshot_*.jpg` files show finished properties or design imagery capture
 ## Completed-project shortages
 
 Both the four-unit San Diego townhomes and Culver City tear-down/rebuild remain text-only. No photograph has yet been positively associated with either approved completed project.
+
+## Gate 2 derivatives now in the review
+
+All derivatives come from `1000047318.mov`. Desktop output is 1280 x 720; phone output is a centered 640 x 640 crop. Both are muted H.264, 24 frames per second, and nine seconds long. The selection uses source seconds 1 through 11, starting playback at source second 2 and crossfading the last second into the first source second to close the loop. The WebP poster is source second 2.
+
+Reviewed the source contact sheet, output frames across the full loop, and cover playback/crop in the browser. The cleared site remains the subject. Adjacent finished buildings are neighboring properties, not claimed Galore work. No scene was generated or composited. Originals are unchanged. No color grading or stabilization has been applied; optional finishing instructions are in PHOTO-AND-MEDIA-BRIEF.md.
+
+The active-site still appears only in its separate in-progress review entry. Both completed projects remain text-only pending confirmed photo assignments.
