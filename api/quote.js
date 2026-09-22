@@ -2,6 +2,10 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// Where new quote requests are delivered. Add/remove addresses here.
+const NOTIFY = ['info@galoreprojects.com', 'bids@galoreprojects.com'];
+const FROM = 'Galore Projects <onboarding@resend.dev>'; // replace with a verified domain sender once galoreprojects.com is verified in Resend
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -11,6 +15,11 @@ export default async function handler(req, res) {
 
   if (!firstName || !email || !projectType) {
     return res.status(400).json({ error: 'Missing required fields: firstName, email, projectType' });
+  }
+
+  if (!process.env.RESEND_API_KEY) {
+    console.error('RESEND_API_KEY is not set');
+    return res.status(500).json({ error: 'Email service not configured' });
   }
 
   const subject = `New Quote Request — ${projectType} — ${location || 'Location not specified'}`;
@@ -79,7 +88,7 @@ export default async function handler(req, res) {
         </div>
         <p style="color:#6B6560;font-size:13px;line-height:1.7;">
           In the meantime, feel free to reach us directly:<br>
-          <strong style="color:#1C1C1C;">📞 (323) 627-5759</strong> &nbsp;|&nbsp; <strong style="color:#1C1C1C;">✉️ info@galoreprojects.com</strong>
+          <strong style="color:#1C1C1C;">(323) 627-5759</strong> &nbsp;|&nbsp; <strong style="color:#1C1C1C;">info@galoreprojects.com</strong>
         </p>
       </div>
       <div style="background:#1C1C1C;padding:20px 32px;text-align:center;">
@@ -90,26 +99,34 @@ export default async function handler(req, res) {
   `;
 
   try {
-    // Send to business
-    await resend.emails.send({
-      from: 'Galore Projects <onboarding@resend.dev>',
-      to: 'info@galoreprojects.com',
+    // Primary: notify the business. This is the send that must succeed.
+    const { error: notifyErr } = await resend.emails.send({
+      from: FROM,
+      to: NOTIFY,
       replyTo: email,
       subject,
       html: businessHtml,
     });
+    if (notifyErr) {
+      console.error('Resend notify error:', JSON.stringify(notifyErr));
+      return res.status(500).json({ error: notifyErr.message || 'Failed to send notification' });
+    }
+  } catch (err) {
+    console.error('Resend notify exception:', JSON.stringify(err));
+    return res.status(500).json({ error: err.message || 'Failed to send email' });
+  }
 
-    // Send confirmation to customer
+  // Secondary: customer confirmation. A failure here must NOT fail the request.
+  try {
     await resend.emails.send({
-      from: 'Galore Projects <onboarding@resend.dev>',
+      from: FROM,
       to: email,
       subject: `We got your request, ${firstName} — Galore Projects`,
       html: customerHtml,
     });
-
-    return res.status(200).json({ success: true });
   } catch (err) {
-    console.error('Resend error:', JSON.stringify(err));
-    return res.status(500).json({ error: err.message || 'Failed to send email' });
+    console.error('Customer confirmation failed (non-fatal):', JSON.stringify(err));
   }
+
+  return res.status(200).json({ success: true });
 }
